@@ -1,0 +1,6 @@
+#Junk. idk what this stuff does but I didn't write it
+*.build/
+*.dist/
+*.test/
+*.build.xml
+*.manifest.mf
