@@ -88,7 +88,7 @@ public class Tribe extends Application {
         Map land = gw.getLand();
         for(int i = 0; i < 300; i++) {
             for(int j = 0; j < 164; j++) {
-                Tile acre = land.getTile(i, j);
+                Arce acre = land.getTile(i, j);
                 
                 if(acre.getPassable()) {
                     gc.setFill(Color.GREEN);

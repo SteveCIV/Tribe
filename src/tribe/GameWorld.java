@@ -24,6 +24,7 @@ public class GameWorld {
         setWorldOlder();
     }
     
+    // GETTERS && SETTERS
     // sets land from given txt file
     public void setLand(Map land) throws FileNotFoundException {
         land = new Map();
@@ -54,7 +55,7 @@ public class GameWorld {
             Random r2 = new Random();
             int rY = r2.nextInt(164);
             
-            Tile tempTile = land.getTile(rX, rY);
+            Arce tempTile = land.getTile(rX, rY);
             if(!tempTile.getPassable()) {
                 i--;
             } else {
