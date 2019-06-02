@@ -106,8 +106,10 @@ public class Tribe extends Application {
     public void drawCivilization(GraphicsContext gc) {
         Civilization civ = gw.getCiv();
         
-        // for every member of a nation draw them on the canvas
+        // for every nation of a civilization
         for(Nation n : civ.getNationList()) {
+            
+            // of every member of a nation print their color to canvas
             for(Member m : n.getMemberList()) {
                 int i = m.getCords().getX();
                 int j = m.getCords().getY();
@@ -117,12 +119,13 @@ public class Tribe extends Application {
         }
     }
     
-    // moves all members on members on the map and redraws canvas
+    // moves all members of all nations and redraws canvas
     public void newYear() {
         gw.generateNewYear();
         drawGameWorld(gc);
     }
     
+    // for i step that many years
     public void newYear(int years) {
         for(int i = 0; i < years; i++) {
             newYear();

@@ -9,22 +9,21 @@ import java.util.ArrayList;
 public class Civilization {
     private ArrayList<Nation> nations;
     private int popNation;
-    private int popMember;
+    private int popCiv;
     
     public Civilization() {
         this.nations = new ArrayList();
         this.popNation = nations.size();
-        this.popMember = 0;
+        this.popCiv = 0;
     }
     
     public Civilization(int popNation, int popMember) {
         this.nations = new ArrayList();
         this.popNation = nations.size();
-        this.popMember = 0;
+        this.popCiv = 0;
     }
     
     public void addNation(Nation newNation) {
-        //Nation newNation = new Nation(n);
         nations.add(newNation);
         setPopNationLarger();
     }
@@ -36,7 +35,7 @@ public class Civilization {
     }
     
     // SETTERS && GETTERS
-    // set civilization
+    // set nation list
     public void setNationList(ArrayList<Nation> nations) {
         this.nations = nations;
     }
@@ -60,13 +59,13 @@ public class Civilization {
         return popNation;
     }
     
-    // returns worldPop
-    public int getPopMember() {
-        int worldPop = 0;
+    // returns popWorld
+    public int getPopCiv() {
+        int tempPop = 0;
         for(Nation n : nations) {
-            worldPop += n.getNationPop();
+            tempPop += n.getNationPop();
         }
-        popMember = worldPop;
-        return popMember;
+        popCiv = tempPop;
+        return popCiv;
     }
 }

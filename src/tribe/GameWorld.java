@@ -24,7 +24,7 @@ public class GameWorld {
         setWorldOlder();
     }
     
-    // sets land as given txt file
+    // sets land from given txt file
     public void setLand(Map land) throws FileNotFoundException {
         land = new Map();
     }
@@ -34,7 +34,7 @@ public class GameWorld {
         return land;
     }
     
-    // sets new civilization
+    // sets civilization
     public void setCiv(Civilization civ) {
         this.civ = civ;
     }
@@ -44,7 +44,7 @@ public class GameWorld {
         return civ;
     }
     
-    // creates a new nation of given size
+    // creates a new nation of given size and adds to nation list
     public void setNewNation(int pop, int year) {
         Nation n = new Nation();
         //ArrayList<Member> n;

@@ -27,6 +27,7 @@ public class Member {
         this.born = yearBorn;
     }
     
+    // for given int will move in a cardinal direction
     public void move(int direction) {
         switch(direction) {
             case 0:
@@ -46,6 +47,7 @@ public class Member {
         }
     }
 
+    // moves member in a cardinal direction
     public void moveNorth() {
         cord.setY(cord.getY() - 1);
     }
@@ -60,12 +62,12 @@ public class Member {
     }
     
     // SETTERS && GETTERS
-    // sets location in space
+    // sets location
     public void setCords(int x, int y) {
         this.cord = new Coordinate(x, y);
     }
     
-    // returns location in space
+    // returns location
     public Coordinate getCords() {
         return cord;
     }
@@ -80,12 +82,12 @@ public class Member {
         this.stregth = str;
     }
 
-    // return stregth
+    // returns stregth
     public double getStregth() {
         return stregth;
     }
 
-    // return age
+    // returns age
     public int getAge(int worldAge) {
         int age = worldAge - born;
         return age;

@@ -39,6 +39,7 @@ public class Nation {
     }
     
     // moves every member of tribe to valid location
+    // inefficient method! copies an entire map and barely uses it
     public void randMoveAllMember(Map land) {
         for(Member m : members) {
             Random r = new Random();
@@ -71,12 +72,12 @@ public class Nation {
     }
     
     // SETTERS && GETTERS
-    // sets nation
+    // sets member list
     public void setMemberList(ArrayList<Member> n) {
         this.members = n;
     }
     
-    // returns memberlist
+    // returns member list
     public ArrayList<Member> getMemberList() {
         return members;
     }
