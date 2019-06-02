@@ -4,24 +4,24 @@ package tribe;
  *
  * @author conor
  */
-public class Arce {
+public class Acre {
     private Coordinate cord;
     private double food;
     private boolean passable;
     
-    public Arce() {
+    public Acre() {
         cord = new Coordinate(0, 0);
         food = 0.0;
         passable = false;
     }
     
-    public Arce(int x, int y) {
+    public Acre(int x, int y) {
         cord = new Coordinate(x, y);
         this.food = 0.0;
         this.passable = false;
     }
     
-    public Arce(int x, int y, boolean passable) {
+    public Acre(int x, int y, boolean passable) {
         cord = new Coordinate(x, y);
         this.food = 0.0;
         this.passable = passable;
@@ -47,12 +47,12 @@ public class Arce {
         this.passable = passable;
     }
     
-    // sets location of Arce on map
+    // sets location of Acre on map
     public void setCords(int x, int y) {
         cord = new Coordinate(x, y);
     }
     
-    // returns location of Arce on map
+    // returns location of Acre on map
     public Coordinate getCords() {
         return cord;
     }

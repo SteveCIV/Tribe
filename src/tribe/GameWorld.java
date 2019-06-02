@@ -55,7 +55,7 @@ public class GameWorld {
             Random r2 = new Random();
             int rY = r2.nextInt(164);
             
-            Arce tempTile = land.getTile(rX, rY);
+            Acre tempTile = land.getTile(rX, rY);
             if(!tempTile.getPassable()) {
                 i--;
             } else {

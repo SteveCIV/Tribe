@@ -45,7 +45,7 @@ public class Nation {
             Random r = new Random();
             int rr = r.nextInt(5);
             
-            Arce tempTile = land.getTile(m.getCords().getX(), m.getCords().getY());
+            Acre tempTile = land.getTile(m.getCords().getX(), m.getCords().getY());
             switch(rr) {
                 case 0:
                     tempTile = land.getTile(m.getCords().getX(), m.getCords().getY() - 1);

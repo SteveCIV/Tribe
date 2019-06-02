@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Map {
     public static final int WIDTH = 300;
     public static final int HEIGHT = 164;
-    public Arce[][] map = new Arce[WIDTH][HEIGHT];
+    public Acre[][] map = new Acre[WIDTH][HEIGHT];
     
     
     public Map() throws FileNotFoundException {
@@ -38,7 +38,7 @@ public class Map {
                         case 'f':
                             isPassable = false;
                     }
-                    map[j][i] = new Arce(i, j, isPassable);
+                    map[j][i] = new Acre(i, j, isPassable);
                 }
                 i++;
             }
@@ -47,9 +47,9 @@ public class Map {
         }
     }
     
-    // return Arce at given (x, y)
-    public Arce getTile(int x, int y) {
-        Arce tempTile = map[x][y];
+    // return Acre at given (x, y)
+    public Acre getTile(int x, int y) {
+        Acre tempTile = map[x][y];
         return tempTile;
     }
 }
