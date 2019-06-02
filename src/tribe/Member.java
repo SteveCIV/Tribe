@@ -5,7 +5,6 @@ package tribe;
  * @author conor
  */
 public class Member {
-    private String name;
     private Coordinate cord;
     private double stregth;
     private final int born;
@@ -24,7 +23,7 @@ public class Member {
     
     Member(int x, int y, int yearBorn) {
         this.cord = new Coordinate(x, y);
-        stregth = randomStregth();
+        stregth = setRandomStregth();
         this.born = yearBorn;
     }
     
@@ -60,25 +59,7 @@ public class Member {
         cord.setX(cord.getX() - 1);
     }
     
-    // sets stregth as random 0.0 to 1.0
-    public double randomStregth() {
-        return Math.random();
-    }
-    // sets stregth
-    public void setStregth(double str) {
-        this.stregth = str;
-    }
-    
-    // return stregth
-    public double getStregth() {
-        return stregth;
-    }
-    
-    // return age
-    public int getAge() {
-        return born;
-    }
-    
+    // SETTERS && GETTERS
     // sets location in space
     public void setCords(int x, int y) {
         this.cord = new Coordinate(x, y);
@@ -87,5 +68,26 @@ public class Member {
     // returns location in space
     public Coordinate getCords() {
         return cord;
+    }
+    
+    // sets stregth as random 0.0 to 1.0
+    public double setRandomStregth() {
+        return Math.random();
+    }
+
+    // sets stregth
+    public void setStregth(double str) {
+        this.stregth = str;
+    }
+
+    // return stregth
+    public double getStregth() {
+        return stregth;
+    }
+
+    // return age
+    public int getAge(int worldAge) {
+        int age = worldAge - born;
+        return age;
     }
 }

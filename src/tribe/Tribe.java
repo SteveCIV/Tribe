@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 
 /**
  *
@@ -79,7 +80,7 @@ public class Tribe extends Application {
     // draws all gw layers to canvas
     private void drawGameWorld(GraphicsContext gc) {
         drawTerrain(gc);
-        drawNation(gc);
+        drawCivilization(gc);
     }
     
     // draws gw.land to canvas
@@ -101,16 +102,18 @@ public class Tribe extends Application {
         }
     }
     
-    // draws gw.nation to canvas
-    public void drawNation(GraphicsContext gc) {
-        Nation nation = gw.getNation();
+    // draws gw.civ to canvas
+    public void drawCivilization(GraphicsContext gc) {
+        Civilization civ = gw.getCiv();
         
         // for every member of a nation draw them on the canvas
-        for(Member m : nation.members) {
-            int i = m.getCords().getX();
-            int j = m.getCords().getY();
-            gc.setFill(Color.RED);
-            gc.fillRect(i * 5, j * 5, 5, 5);
+        for(Nation n : civ.getNationList()) {
+            for(Member m : n.getMemberList()) {
+                int i = m.getCords().getX();
+                int j = m.getCords().getY();
+                gc.setFill(Color.RED);
+                gc.fillRect(i * 5, j * 5, 5, 5);
+            }
         }
     }
     

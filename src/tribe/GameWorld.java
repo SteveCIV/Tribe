@@ -1,6 +1,7 @@
 package tribe;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -9,18 +10,17 @@ import java.util.Random;
  */
 public class GameWorld {
     private final Map land;
-    private Nation nation; // will be an array list
+    private Civilization civ;
     private int worldAge;
     
     public GameWorld() throws FileNotFoundException {
         land = new Map();
-        nation = new Nation();
+        civ = new Civilization();
         worldAge = 0;
     }
     
     public void generateNewYear() {
-        int pop = nation.getNationPop();
-        nation.randMoveAll(land);
+        civ.randMoveAllNation(land);
         setWorldOlder();
     }
     
@@ -29,13 +29,25 @@ public class GameWorld {
         land = new Map();
     }
     
-    // gives land
+    // returns land
     public Map getLand() {
         return land;
     }
     
+    // sets new civilization
+    public void setCiv(Civilization civ) {
+        this.civ = civ;
+    }
+    
+    // returns civilization
+    public Civilization getCiv() {
+        return civ;
+    }
+    
     // creates a new nation of given size
     public void setNewNation(int pop, int year) {
+        Nation n = new Nation();
+        //ArrayList<Member> n;
         for(int i = 0; i < pop; i++) {
             Random r1 = new Random();
             int rX = r1.nextInt(300);
@@ -46,14 +58,10 @@ public class GameWorld {
             if(!tempTile.getPassable()) {
                 i--;
             } else {
-                nation.addMember(rX, rY, year);
+                n.addMember(rX, rY, year);
             }
         }
-    }
-    
-    // returns a nation
-    public Nation getNation() {
-        return nation;
+        civ.addNation(n);
     }
     
     // worldAge++
@@ -61,7 +69,7 @@ public class GameWorld {
         worldAge++;
     }
     
-    //return worldAge
+    // returns worldAge
     public int getWorldAge() {
         return worldAge;
     }
