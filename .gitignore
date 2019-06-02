@@ -3,6 +3,6 @@
 *.class
 *.xml
 *.mf
-build/
-dist/
-test/
+build*/
+dist*/
+test*/
