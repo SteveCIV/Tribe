@@ -35,7 +35,7 @@ public class GameWorld {
     }
     
     // creates a new nation of given size
-    public void newNation(int pop, int year) {
+    public void setNewNation(int pop, int year) {
         for(int i = 0; i < pop; i++) {
             Random r1 = new Random();
             int rX = r1.nextInt(300);

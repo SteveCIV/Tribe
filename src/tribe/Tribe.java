@@ -44,15 +44,15 @@ public class Tribe extends Application {
         
         // will be replaced with user provied input
         gw = new GameWorld();
-        gw.newNation(1000, gw.getWorldAge());
+        gw.setNewNation(1000, gw.getWorldAge());
         
         // components for scene2
         Button button2 = new Button();
         button2.setText("Next Year (x 1)");
-        button2.setOnAction(e -> newYear()); // will do much more
+        button2.setOnAction(e -> newYear());
         Button button3 = new Button();
         button3.setText("Next Year (x10)");
-        button3.setOnAction(e -> System.out.println("world will become older x10")); // NOT IMPLEMENTED
+        button3.setOnAction(e -> newYear(10));
         Button button4 = new Button();
         button4.setText("Main Menu");
         button4.setOnAction(e -> window.setScene(mainMenu));
@@ -118,6 +118,12 @@ public class Tribe extends Application {
     public void newYear() {
         gw.generateNewYear();
         drawGameWorld(gc);
+    }
+    
+    public void newYear(int years) {
+        for(int i = 0; i < years; i++) {
+            newYear();
+        }
     }
 
     public static void main(String[] args) {
