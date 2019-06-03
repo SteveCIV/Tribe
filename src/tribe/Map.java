@@ -5,8 +5,7 @@ package tribe;
  * @author conor
  */
 public class Map {
-    private Acre[][] map = new Acre[300][164];
-    
+    private Acre[][] map = new Acre[Tribe.WIDTH][Tribe.HEIGHT];
     
     public Map() {
         fillMap();

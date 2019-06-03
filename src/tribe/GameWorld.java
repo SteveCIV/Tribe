@@ -51,12 +51,25 @@ public class GameWorld {
         Nation n = new Nation();
         for(int i = 0; i < pop; i++) {
             Random r1 = new Random();
-            int rX = r1.nextInt(300);
+            int rX = r1.nextInt(Tribe.WIDTH);
             Random r2 = new Random();
-            int rY = r2.nextInt(164);
+            int rY = r2.nextInt(Tribe.HEIGHT);
             
-            Acre tempAcre = land.getAcre(rX, rY);
-            if(!tempAcre.getPassable()) {
+            // create collider
+            Member m = new Member(rX, rY, year);
+            Tile collider = new Tile(m);
+            
+            // find tile
+            Acre aMove = land.getAcre(rX, rY);
+            
+            // find member, test if occupied 
+            Member mMove = new Member(rX, rY);
+            Member testMove = Nation.findMember(mMove.getCords(), n.getMemberList());
+            
+            // create collidee
+            Tile collidee = new Tile(testMove, aMove);
+            TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
+            if(!canCollide.memberToTileCollide()) {
                 i--;
             } else {
                 n.addMember(rX, rY, year);

@@ -74,12 +74,12 @@ public class Nation {
             }
             
             // collidee
-            Member testMove = findMember(mMove.getCords());
+            Member testMove = findMember(mMove.getCords(), members);
             Tile collidee = new Tile(testMove, aMove);
             
             // moves member if movement is valid
-            TileCollision canCollide = new TileCollision(collider, collidee);
-            boolean validMove = canCollide.collision();
+            TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
+            boolean validMove = canCollide.memberToTileCollide();
             if(validMove) {
                m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
             }
@@ -87,8 +87,8 @@ public class Nation {
     }
     
     // attempts to find member given cords
-    public Member findMember(Coordinate c) {
-        for(Member m : members) {
+    public static Member findMember(Coordinate c, ArrayList<Member> n) {
+        for(Member m : n) {
             if(m.getCords().getX() == c.getX() && m.getCords().getY() == c.getY()) {
                 return m;
             }
