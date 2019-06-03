@@ -10,15 +10,9 @@ public class Acre {
     private boolean passable;
     
     public Acre() {
-        cord = new Coordinate(0, 0);
+        cord = new Coordinate(-1, -1);
         food = 0.0;
         passable = false;
-    }
-    
-    public Acre(int x, int y) {
-        cord = new Coordinate(x, y);
-        this.food = 0.0;
-        this.passable = false;
     }
     
     public Acre(int x, int y, boolean passable) {
@@ -27,12 +21,13 @@ public class Acre {
         this.passable = passable;
     }
     
+    // GETTERS && SETTERS
     // returns food
     public double getFood() {
         return food;
     }
     
-    // sets new food value
+    // sets food
     public void setFood(double food) {
         this.food = food;
     }
@@ -42,17 +37,17 @@ public class Acre {
         return passable;
     }
     
-    // sets new passable value
+    // sets passable
     public void setPassable(boolean passable) {
         this.passable = passable;
     }
     
-    // sets location of Acre on map
+    // sets cords
     public void setCords(int x, int y) {
         cord = new Coordinate(x, y);
     }
     
-    // returns location of Acre on map
+    // returns cords
     public Coordinate getCords() {
         return cord;
     }

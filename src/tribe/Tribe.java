@@ -88,7 +88,7 @@ public class Tribe extends Application {
         Map land = gw.getLand();
         for(int i = 0; i < 300; i++) {
             for(int j = 0; j < 164; j++) {
-                Acre acre = land.getTile(i, j);
+                Acre acre = land.getAcre(i, j);
                 
                 if(acre.getPassable()) {
                     gc.setFill(Color.GREEN);
@@ -125,9 +125,9 @@ public class Tribe extends Application {
         drawGameWorld(gc);
     }
     
-    // for i step that many years
-    public void newYear(int years) {
-        for(int i = 0; i < years; i++) {
+    // n years pass given n
+    public void newYear(int n) {
+        for(int i = 0; i < n; i++) {
             newYear();
         }
     }

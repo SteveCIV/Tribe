@@ -15,36 +15,16 @@ public class Member {
         this.born = -1;
     }
     
-    Member(int x, int y) {
-        this.cord = new Coordinate(x, y);
-        this.stregth = 0.0;
-        this.born = -1;
-    }
+//    Member(int x, int y) {
+//        this.cord = new Coordinate(x, y);
+//        this.stregth = 0.0;
+//        this.born = -1;
+//    }
     
     Member(int x, int y, int yearBorn) {
         this.cord = new Coordinate(x, y);
-        stregth = setRandomStregth();
+        stregth = 0.0;
         this.born = yearBorn;
-    }
-    
-    // for given int will move in a cardinal direction
-    public void move(int direction) {
-        switch(direction) {
-            case 0:
-                moveNorth();
-                break;
-            case 1:
-                moveEast();
-                break;
-            case 2:
-                moveSouth();
-                break;
-            case 3:
-                moveWest();
-                break;
-            case 4:
-                break;
-        }
     }
 
     // moves member in a cardinal direction
@@ -91,5 +71,10 @@ public class Member {
     public int getAge(int worldAge) {
         int age = worldAge - born;
         return age;
+    }
+    
+    // returns born
+    public int getBorn() {
+        return born;
     }
 }

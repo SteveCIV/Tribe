@@ -5,32 +5,32 @@ package tribe;
  * @author conor
  */
 public class Tile {
-    private boolean hasMember;
     private Member m;
-    private boolean hasArce;
     private Acre a;
     
     public Tile() {
-        this.hasMember = false;
         this.m = null;
-        this.hasArce = false;
         this.a = null;
     }
     
-    public Tile(Member member, Acre arce) {
-        this.hasMember = true;
+    public Tile(Member member) {
         this.m = member;
-        this.hasArce = true;
-        this.a = arce;
+        this.a = null;
+    }
+    
+    public Tile(Acre acre) {
+        this.m = null;
+        this.a = acre;
+    }
+    
+    public Tile(Member member, Acre acre) {
+        this.m = member;
+        this.a = acre;
     }
     
     // GETTERS && SETTERS
-    public void setHasMember(boolean b) {
-        hasMember = b;
-    }
-    
     public boolean getHasMember() {
-        return hasMember;
+        return (m != null);
     }
     
     public void setMember(Member member) {
@@ -41,16 +41,12 @@ public class Tile {
         return m;
     }
     
-    public void setHasAcre(boolean b) {
-        hasArce = b;
-    }
-    
     public boolean getHasAcre() {
-        return hasArce;
+        return (a != null);
     }
     
-    public void setAcre(Acre arce) {
-        a = arce;
+    public void setAcre(Acre acre) {
+        a = acre;
     }
     
     public Acre getAcre() {

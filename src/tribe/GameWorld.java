@@ -1,7 +1,6 @@
 package tribe;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -19,6 +18,7 @@ public class GameWorld {
         worldAge = 0;
     }
     
+    // moves civilizatoin, setWorldOlder
     public void generateNewYear() {
         civ.randMoveAllNation(land);
         setWorldOlder();
@@ -46,17 +46,17 @@ public class GameWorld {
     }
     
     // creates a new nation of given size and adds to nation list
+    // bug! doesn't check for overlapping membres
     public void setNewNation(int pop, int year) {
         Nation n = new Nation();
-        //ArrayList<Member> n;
         for(int i = 0; i < pop; i++) {
             Random r1 = new Random();
             int rX = r1.nextInt(300);
             Random r2 = new Random();
             int rY = r2.nextInt(164);
             
-            Acre tempTile = land.getTile(rX, rY);
-            if(!tempTile.getPassable()) {
+            Acre tempAcre = land.getAcre(rX, rY);
+            if(!tempAcre.getPassable()) {
                 i--;
             } else {
                 n.addMember(rX, rY, year);

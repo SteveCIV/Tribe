@@ -2,6 +2,7 @@ package tribe;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.ListIterator;
 
 /**
  *
@@ -39,34 +40,70 @@ public class Nation {
     }
     
     // moves every member of tribe to valid location
+    // unsafe method! only checks for member collisions within own tribe
     // inefficient method! copies an entire map and barely uses it
     public void randMoveAllMember(Map land) {
         for(Member m : members) {
+            
+            // collider
+            Tile collider = new Tile(m, land.getAcre(m.getCords().getX(), m.getCords().getY()));
+            
+            // finds part of collidee
+            Acre aMove = land.getAcre(m.getCords().getX(), m.getCords().getY());
+            Member mMove = new Member(m.getCords().getX(), m.getCords().getY(), m.getBorn());
             Random r = new Random();
             int rr = r.nextInt(5);
-            
-            Acre tempTile = land.getTile(m.getCords().getX(), m.getCords().getY());
-            switch(rr) {
+            switch (rr) {
                 case 0:
-                    tempTile = land.getTile(m.getCords().getX(), m.getCords().getY() - 1);
+                    mMove.moveNorth();
+                    aMove = land.getAcre(m.getCords().getX(), m.getCords().getY() - 1);
                     break;
                 case 1:
-                    tempTile = land.getTile(m.getCords().getX() + 1, m.getCords().getY());
+                    mMove.moveEast();
+                    aMove = land.getAcre(m.getCords().getX() + 1, m.getCords().getY());
                     break;
                 case 2:
-                    tempTile = land.getTile(m.getCords().getX(), m.getCords().getY() + 1);
+                    mMove.moveSouth();
+                    aMove = land.getAcre(m.getCords().getX(), m.getCords().getY() + 1);
                     break;
                 case 3:
-                    tempTile = land.getTile(m.getCords().getX() - 1, m.getCords().getY());
+                    mMove.moveWest();
+                    aMove = land.getAcre(m.getCords().getX() - 1, m.getCords().getY());
                     break;
                 case 4:
                     break;
             }
             
-            if(tempTile.getPassable() /*&& no other members are in this spot*/) {
-                m.move(rr);
-            } else {
-                // reroll directoin of travel
+            // collidee
+            Member testMove = findMember(mMove.getCords());
+            Tile collidee = new Tile(testMove, aMove);
+            
+            // moves member if movement is valid
+            TileCollision canCollide = new TileCollision(collider, collidee);
+            boolean validMove = canCollide.collision();
+            if(validMove) {
+               m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
+            }
+        }
+    }
+    
+    // attempts to find member given cords
+    public Member findMember(Coordinate c) {
+        for(Member m : members) {
+            if(m.getCords().getX() == c.getX() && m.getCords().getY() == c.getY()) {
+                return m;
+            }
+        }
+        return null;
+    }
+    
+    // attempts to delete member given cords
+    // untested!
+    public void deleteMember(Coordinate c) {
+        for(Member m : members) {
+            if(m.getCords().getX() == c.getX() && m.getCords().getY() == c.getY()) {
+                members.remove(m);
+                break;
             }
         }
     }

@@ -48,8 +48,8 @@ public class Map {
     }
     
     // return Acre at given (x, y)
-    public Acre getTile(int x, int y) {
-        Acre tempTile = map[x][y];
-        return tempTile;
+    public Acre getAcre(int x, int y) {
+        Acre acre = map[x][y];
+        return acre;
     }
 }

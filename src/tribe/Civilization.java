@@ -28,6 +28,7 @@ public class Civilization {
         setPopNationLarger();
     }
     
+    // moves all nations
     public void randMoveAllNation(Map land) {
         for(Nation n : nations) {
             n.randMoveAllMember(land);
