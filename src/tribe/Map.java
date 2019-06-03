@@ -20,6 +20,8 @@ public class Map {
         
         for(int i = 0; i < charMap.length; i++) {
             for(int j = 0; j < charMap[0].length; j++) {
+                
+                // initialise new Acre and sets values
                 Acre a = new Acre(i, j);
                 switch(charMap[i][j]) {
                     case 'w':
