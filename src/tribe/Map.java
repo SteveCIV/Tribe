@@ -1,50 +1,44 @@
 package tribe;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 /**
  *
  * @author conor
  */
 public class Map {
-    public static final int WIDTH = 300;
-    public static final int HEIGHT = 164;
-    public Acre[][] map = new Acre[WIDTH][HEIGHT];
+    private Acre[][] map = new Acre[300][164];
     
     
-    public Map() throws FileNotFoundException {
+    public Map() {
         fillMap();
     }
     
-    // fills map from premade text file
+    // fills map from char[][]
     public void fillMap() {
-        try {
-            File source = new File("C:/Users/conor/Documents/NetBeansProjects/CS141/Tribe/src/maps/earth300x164.txt");
-            Scanner scr = new Scanner(source);
-            
-            int i = 0;
-            while (scr.hasNextLine()) {
-                String line = scr.nextLine();
-                //System.out.println("next line " + line);
-                for (int j = 0; j < line.length(); j++) {
-                    
-                    // idk why tf this works
-                    boolean isPassable = true;
-                    switch (line.charAt(j)) {
-                        case 'W':
-                            isPassable = true;
-                        case 'f':
-                            isPassable = false;
-                    }
-                    map[j][i] = new Acre(i, j, isPassable);
+        MapGenerator mapG = new MapGenerator();
+        char[][] charMap;
+        charMap = mapG.getCharMap();
+        
+        for(int i = 0; i < charMap.length; i++) {
+            for(int j = 0; j < charMap[0].length; j++) {
+                Acre a = new Acre(i, j);
+                switch(charMap[i][j]) {
+                    case 'w':
+                        a.setPassable(true);
+                        a.setFood(0.0);
+                        break;
+                    case ' ':
+                        a.setPassable(false);
+                        a.setFood(1.0);
                 }
-                i++;
+                setAcre(a, i, j);
             }
-        } catch(FileNotFoundException e) {
-            System.out.println("File not found");
         }
+    }
+    
+    // GETTERS && SETTERS
+    // sets acre at given (x, y)
+    public void setAcre(Acre a, int x, int y) {
+        map[x][y] = a;
     }
     
     // return Acre at given (x, y)

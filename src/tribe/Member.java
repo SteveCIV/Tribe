@@ -15,12 +15,6 @@ public class Member {
         this.born = -1;
     }
     
-//    Member(int x, int y) {
-//        this.cord = new Coordinate(x, y);
-//        this.stregth = 0.0;
-//        this.born = -1;
-//    }
-    
     Member(int x, int y, int yearBorn) {
         this.cord = new Coordinate(x, y);
         stregth = 0.0;

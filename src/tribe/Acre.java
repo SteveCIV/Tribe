@@ -10,13 +10,19 @@ public class Acre {
     private boolean passable;
     
     public Acre() {
-        cord = new Coordinate(-1, -1);
-        food = 0.0;
-        passable = false;
+        this.cord = new Coordinate(-1, -1);
+        this.food = 0.0;
+        this.passable = false;
+    }
+    
+    public Acre(int x, int y) {
+        this.cord = new Coordinate(x, y);
+        this.food = 0.0;
+        this.passable = false;
     }
     
     public Acre(int x, int y, boolean passable) {
-        cord = new Coordinate(x, y);
+        this.cord = new Coordinate(x, y);
         this.food = 0.0;
         this.passable = passable;
     }
