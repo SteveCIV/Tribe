@@ -39,35 +39,37 @@ public class Nation {
     }
     
     // moves every member of tribe to valid location
-    // unsafe method! only checks for member collisions within own tribe
     // inefficient method! copies an entire map and barely uses it
     public void randMoveAllMember(Map land) {
         for(Member m : members) {
             
+            // members original cords
+            Coordinate mCord = new Coordinate(m.getCords().getX(), m.getCords().getY());
+            
             // collider
-            Tile collider = new Tile(m, land.getAcre(m.getCords().getX(), m.getCords().getY()));
+            Tile collider = new Tile(m, land.getAcre(mCord.getX(), mCord.getY()));
             
             // finds part of collidee
-            Acre aMove = land.getAcre(m.getCords().getX(), m.getCords().getY());
-            Member mMove = new Member(m.getCords().getX(), m.getCords().getY(), m.getBorn());
+            Acre aMove = land.getAcre(mCord.getX(), mCord.getY());
+            Member mMove = new Member(mCord.getX(), mCord.getY(), m.getBorn());
             Random r = new Random();
             int rr = r.nextInt(5);
             switch (rr) {
                 case 0:
                     mMove.moveNorth();
-                    aMove = land.getAcre(m.getCords().getX(), m.getCords().getY() - 1);
+                    aMove = land.getAcre(mCord.getX(), mCord.getY() - 1);
                     break;
                 case 1:
                     mMove.moveEast();
-                    aMove = land.getAcre(m.getCords().getX() + 1, m.getCords().getY());
+                    aMove = land.getAcre(mCord.getX() + 1, mCord.getY());
                     break;
                 case 2:
                     mMove.moveSouth();
-                    aMove = land.getAcre(m.getCords().getX(), m.getCords().getY() + 1);
+                    aMove = land.getAcre(mCord.getX(), mCord.getY() + 1);
                     break;
                 case 3:
                     mMove.moveWest();
-                    aMove = land.getAcre(m.getCords().getX() - 1, m.getCords().getY());
+                    aMove = land.getAcre(mCord.getX() - 1, mCord.getY());
                     break;
                 case 4:
                     break;
@@ -81,7 +83,8 @@ public class Nation {
             TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
             boolean validMove = canCollide.memberToTileCollide();
             if(validMove) {
-               m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
+                land.getAcre(mCord.getX(), mCord.getY()).setFood(nationAvgStr);
+                m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
             }
         }
     }

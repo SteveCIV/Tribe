@@ -25,11 +25,11 @@ public class Map {
                 switch(charMap[i][j]) {
                     case 'w':
                         a.setPassable(true);
-                        a.setFood(0.0);
+                        a.setFood(1.0);
                         break;
                     case ' ':
                         a.setPassable(false);
-                        a.setFood(1.0);
+                        a.setFood(0.0);
                 }
                 setAcre(a, i, j);
             }
@@ -42,9 +42,20 @@ public class Map {
         map[x][y] = a;
     }
     
+    // sets acre at given Cord
+    public void setAcre(Acre a, Coordinate c) {
+        map[c.getX()][c.getY()] = a;
+    }
+    
     // return Acre at given (x, y)
     public Acre getAcre(int x, int y) {
         Acre acre = map[x][y];
+        return acre;
+    }
+    
+    // returns Acre at given Cord
+    public Acre getAcre(Coordinate c) {
+        Acre acre = map[c.getX()][c.getY()];
         return acre;
     }
 }
