@@ -46,7 +46,7 @@ public class GameWorld {
     }
     
     // creates a new nation of given size and adds to nation list
-    // bug! doesn't check for overlapping membres
+    // bug! doesn't check for overlapping membres 
     public void setNewNation(int pop, int year) {
         Nation n = new Nation();
         for(int i = 0; i < pop; i++) {

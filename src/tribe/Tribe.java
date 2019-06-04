@@ -48,15 +48,21 @@ public class Tribe extends Application {
         
         // components for scene2
         Button button2 = new Button();
-        button2.setText("Next Year (x 1)");
+        button2.setText("Next Year (x  1)");
         button2.setOnAction(e -> newYear());
         Button button3 = new Button();
-        button3.setText("Next Year (x10)");
+        button3.setText("Next Year (x 10)");
         button3.setOnAction(e -> newYear(10));
         Button button4 = new Button();
-        button4.setText("Main Menu");
-        button4.setOnAction(e -> window.setScene(mainMenu));
-        ToolBar toolBar = new ToolBar(button2, button3, button4);
+        button4.setText("Next Year (x100)");
+        button4.setOnAction(e -> newYear(100));
+        Button button5 = new Button();
+        button5.setText("Game stats");
+        button5.setOnAction(e -> showStats());
+        Button button6 = new Button();
+        button6.setText("Main Menu");
+        button6.setOnAction(e -> window.setScene(mainMenu));
+        ToolBar toolBar = new ToolBar(button2, button3, button4, button5, button6);
         
         // canvas component for scene2
         Canvas canvas = new Canvas(5 * WIDTH, 5 * HEIGHT);
@@ -72,6 +78,9 @@ public class Tribe extends Application {
         initalWorld = new Scene(layout2, 5 * WIDTH, 5 * HEIGHT + 45);
         
         window.setTitle("Tribe (300x164)");
+        window.setResizable(false);
+        window.setX(WIDTH);
+        window.setY(HEIGHT);
         window.setScene(mainMenu);
         window.show();
     }
@@ -116,6 +125,10 @@ public class Tribe extends Application {
                 gc.fillRect(i * 5, j * 5, 5, 5);
             }
         }
+    }
+    
+    public void showStats() {
+        StatsPopup.display("Statistics", 1, gw.getCiv().getNationList().size(), gw.getCiv().getPopCiv(), gw.getWorldAge());
     }
     
     // moves all members of all nations and redraws canvas
