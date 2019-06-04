@@ -1,6 +1,7 @@
 package tribe;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -58,7 +60,7 @@ public class Tribe extends Application {
         button4.setOnAction(e -> newYear(100));
         Button button5 = new Button();
         button5.setText("Game stats");
-        button5.setOnAction(e -> showStats());
+        button5.setOnAction(e -> showGlobalStats());
         Button button6 = new Button();
         button6.setText("Main Menu");
         button6.setOnAction(e -> window.setScene(mainMenu));
@@ -66,6 +68,26 @@ public class Tribe extends Application {
         
         // canvas component for scene2
         Canvas canvas = new Canvas(5 * WIDTH, 5 * HEIGHT);
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, 
+        new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                int xCord = (int)e.getX() / 5;
+                int yCord = (int)e.getY() / 5;
+                
+                // finds member
+                Coordinate c = new Coordinate(xCord, yCord);
+                Member m = new Member();
+                for(Nation n : gw.getCiv().getNationList()) {
+                    m = n.findMember(c, n.getMemberList());
+                }
+                
+                // fins acre
+                Acre a = gw.getLand().getAcre(xCord, yCord);
+                Tile tile = new Tile(m, a);
+                showTileStats(tile);
+            }
+        });
         gc = canvas.getGraphicsContext2D();
         drawGameWorld(gc);
         
@@ -127,8 +149,12 @@ public class Tribe extends Application {
         }
     }
     
-    public void showStats() {
-        StatsPopup.display("Statistics", 1, gw.getCiv().getNationList().size(), gw.getCiv().getPopCiv(), gw.getWorldAge());
+    public void showGlobalStats() {
+        GlobalStatsPopup.display("Global Statistics", 1, gw.getCiv().getNationList().size(), gw.getCiv().getPopCiv(), gw.getWorldAge());
+    }
+    
+    public void showTileStats(Tile t) {
+        TileStatsPopup.display("Tile Statistics", t);
     }
     
     // moves all members of all nations and redraws canvas

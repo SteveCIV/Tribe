@@ -10,7 +10,7 @@ import javafx.stage.Stage;
  *
  * @author conor
  */
-public class StatsPopup {
+public class GlobalStatsPopup {
     
     public static void display(String title, int civNumber, int natNumber, int memNumber, int worldAge) {
         Stage window = new Stage();
