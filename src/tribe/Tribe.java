@@ -24,6 +24,12 @@ public class Tribe extends Application {
     public static final int HEIGHT = 164;
     public static GameWorld gw;
     
+    public static final Color RAINFOREST = Color.rgb(28, 178, 66);
+    public static final Color SEASONALFOREST = Color.rgb(77, 255, 77);
+    public static final Color SAVANNA = Color.rgb(144, 255, 77);
+    public static final Color DESERT = Color.rgb(212, 255, 77);
+    
+    
     Stage window;
     Scene mainMenu, initalWorld;
     GraphicsContext gc;
@@ -121,7 +127,17 @@ public class Tribe extends Application {
                 Acre acre = land.getAcre(i, j);
                 
                 if(acre.getPassable()) {
-                    gc.setFill(Color.GREEN);
+                    if(acre.getFood() > 0.75) {
+                        gc.setFill(RAINFOREST);
+                    } else if(acre.getFood() > 0.5) {
+                        gc.setFill(SEASONALFOREST);
+                    } else if(acre.getFood() > 0.25) {
+                        gc.setFill(SAVANNA);
+                    } else if(acre.getFood() > 0.0){
+                        gc.setFill(DESERT);
+                    } else {
+                        gc.setFill(Color.GRAY);
+                    }
                     gc.fillRect(i * 5, j * 5, 5, 5);
                 }
                 if(!acre.getPassable()) {
