@@ -2,6 +2,7 @@ package tribe;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -10,24 +11,22 @@ import java.util.Random;
 public class Nation {
     private ArrayList<Member> members;
     private int popNation;
-    private double nationAvgStr;
+    Random r = new Random();
+    public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
     Nation() {
         this.members = new ArrayList();
         this.popNation = members.size();
-        this.nationAvgStr = -1;
     }
     
     Nation(int pop, int year) {
         this.members = new ArrayList();
         this.popNation = members.size();
-        this.nationAvgStr = -1;
     }
     
     Nation(ArrayList<Member> m) {
         this.members = m;
         this.popNation = members.size();
-        this.nationAvgStr = -1;
     }
     
     // adds member a given (x, y) and birth year 

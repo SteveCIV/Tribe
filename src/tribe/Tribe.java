@@ -154,13 +154,12 @@ public class Tribe extends Application {
         
         // for every nation of a civilization
         for(Nation n : civ.getNationList()) {
-            
+            gc.setFill(n.NCOLOR);
             // of every member of a nation print their color to canvas
             for(Member m : n.getMemberList()) {
                 int i = m.getCords().getX();
                 int j = m.getCords().getY();
-                gc.setFill(Color.RED);
-                gc.fillRect(i * 5, j * 5, 5, 5);
+                gc.fillOval(i * 5, j * 5, 5, 5);
             }
         }
     }
