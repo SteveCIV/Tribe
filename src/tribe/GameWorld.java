@@ -54,16 +54,17 @@ public class GameWorld {
             int rX = r1.nextInt(Tribe.WIDTH);
             Random r2 = new Random();
             int rY = r2.nextInt(Tribe.HEIGHT);
+            Coordinate rC = new Coordinate(rX, rY);
             
             // create collider
-            Member m = new Member(rX, rY, year);
+            Member m = new Member(rC, year);
             Tile collider = new Tile(m);
             
             // find tile
             Acre aMove = land.getAcre(rX, rY);
             
             // find member, test if occupied 
-            Member mMove = new Member(rX, rY);
+            Member mMove = new Member(rC);
             Member testMove = Nation.findMember(mMove.getCords(), n.getMemberList());
             
             // create collidee
@@ -72,7 +73,7 @@ public class GameWorld {
             if(!canCollide.memberToTileCollide()) {
                 i--;
             } else {
-                n.addMember(rX, rY, year);
+                n.addMember(rC, year);
             }
         }
         civ.addNation(n);

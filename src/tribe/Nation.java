@@ -32,8 +32,8 @@ public class Nation {
     
     // adds member a given (x, y) and birth year 
     // unsafe method! does not check if square is a valid place for member to exist
-    public void addMember(int x, int y, int yearBorn) {
-        Member newMember = new Member(x, y, yearBorn);
+    public void addMember(Coordinate c, int yearBorn) {
+        Member newMember = new Member(c, yearBorn);
         members.add(newMember);
         setNationPopLarger();
     }
@@ -51,7 +51,7 @@ public class Nation {
             
             // finds part of collidee
             Acre aMove = land.getAcre(mCord.getX(), mCord.getY());
-            Member mMove = new Member(mCord.getX(), mCord.getY(), m.getBorn());
+            Member mMove = new Member(mCord, m.getBorn());
             Random r = new Random();
             int rr = r.nextInt(5);
             switch (rr) {
@@ -83,7 +83,6 @@ public class Nation {
             TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
             boolean validMove = canCollide.memberToTileCollide();
             if(validMove) {
-                land.getAcre(mCord.getX(), mCord.getY()).setFood(nationAvgStr);
                 m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
             }
         }
