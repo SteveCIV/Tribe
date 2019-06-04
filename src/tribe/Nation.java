@@ -43,11 +43,14 @@ public class Nation {
     public void randMoveAllMember(Map land) {
         for(Member m : members) {
             
-            // members original cords
+            // collider member cords
             Coordinate mCord = new Coordinate(m.getCords().getX(), m.getCords().getY());
             
+            // collider acre
+            Acre a = land.getAcre(mCord.getX(), mCord.getY());
+            
             // collider
-            Tile collider = new Tile(m, land.getAcre(mCord.getX(), mCord.getY()));
+            Tile collider = new Tile(m, a);
             
             // finds part of collidee
             Acre aMove = land.getAcre(mCord.getX(), mCord.getY());
@@ -83,6 +86,7 @@ public class Nation {
             TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
             boolean validMove = canCollide.memberToTileCollide();
             if(validMove) {
+                a.changeFood(-0.1);
                 m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
             }
         }

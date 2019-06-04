@@ -27,6 +27,10 @@ public class Acre {
         this.passable = passable;
     }
     
+    public void changeFood(double c) {
+        this.food = food + c;
+    }
+    
     // GETTERS && SETTERS
     // returns food
     public double getFood() {
