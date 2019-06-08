@@ -10,7 +10,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -40,6 +39,7 @@ public class Tribe extends Application {
     
     @Override
     public void start(Stage window) throws Exception {
+        gw = new GameWorld(); // TODO: will use user provied input
         
         // components for scene menuMain
         Label label1 = new Label("Welcome to Tribe");
@@ -61,9 +61,6 @@ public class Tribe extends Application {
         
         // adding layout to scene menuMain
         menuMain = new Scene(layout1, 400, 200);
-        
-        gw = new GameWorld();
-        gw.setNewNation(1000, gw.getWorldAge()); // TODO: will use user provied input
         
         // components for scene currentGame
         Button buttonNextYear1 = new Button();
@@ -93,10 +90,12 @@ public class Tribe extends Application {
                 int yCord = (int)e.getY() / 5;
                 
                 // finds member
-                Coordinate c = new Coordinate(xCord, yCord);
+                Coordinate cord = new Coordinate(xCord, yCord);
                 Member m = new Member();
-                for(Nation n : gw.getCiv().getNationList()) {
-                    m = n.findMember(c, n.getMemberList());
+                for(Civilization c : gw.getCivList()) {
+                    for(Nation n : c.getNationList()) {
+                        m = n.findMember(cord, n.getMemberList());
+                    }
                 }
                 
                 // fins acre
@@ -135,7 +134,7 @@ public class Tribe extends Application {
         sliderMem.setBlockIncrement(1);
         Button buttonStart = new Button();
         buttonStart.setText("Start Game");
-        buttonStart.setOnAction(e -> window.setScene(currentGame));
+        buttonStart.setOnAction(e -> startNewGame(window, (int)sliderCiv.getValue(), (int)sliderNat.getValue(), (int)sliderMem.getValue(), gw.getWorldAge())); //TODO: bad idea, passing window
         Button buttonBack = new Button();
         buttonBack.setText("Back");
         buttonBack.setOnAction(e -> window.setScene(menuMain));
@@ -160,7 +159,7 @@ public class Tribe extends Application {
     // draws all gw layers to canvas
     private void drawGameWorld(GraphicsContext gc) {
         drawTerrain(gc);
-        drawCivilization(gc);
+        drawCivilizations(gc);
     }
     
     // draws gw.land to canvas
@@ -193,24 +192,33 @@ public class Tribe extends Application {
     }
     
     // draws gw.civ to canvas
-    public void drawCivilization(GraphicsContext gc) {
-        Civilization civ = gw.getCiv();
-        
-        // for every nation of a civilization
-        for(Nation n : civ.getNationList()) {
-            gc.setFill(n.NCOLOR);
-            // of every member of a nation print their color to canvas
-            for(Member m : n.getMemberList()) {
-                int i = m.getCords().getX();
-                int j = m.getCords().getY();
-                gc.fillOval(i * 5, j * 5, 5, 5);
+    public void drawCivilizations(GraphicsContext gc) {
+        // for every civilization of a gameworld
+        for(Civilization c : gw.getCivList()) {
+            // for every nation of a civilization
+            for(Nation n : c.getNationList()) {
+                gc.setFill(n.NCOLOR);
+                // of every member of a nation print their color to canvas
+                for(Member m : n.getMemberList()) {
+                    int i = m.getCords().getX();
+                    int j = m.getCords().getY();
+                    gc.fillOval(i * 5, j * 5, 5, 5);
+                }
             }
         }
     }
     
+    // starts new game with given parameters
+    public void startNewGame(Stage window, int popCiv, int popNat, int popMem, int worldAge) {
+        for(int i = 0; i < popCiv; i++) {
+            gw.addCiv(popNat, popMem, worldAge);
+        }
+        window.setScene(currentGame);
+    }
+    
     // opens GlobalStats window
     public void showGlobalStats() {
-        GlobalStatsPopup.display("Global Statistics", 1, gw.getCiv().getNationList().size(), gw.getCiv().getPopCiv(), gw.getWorldAge());
+//        GlobalStatsPopup.display("Global Statistics", 1, gw.getCiv().getNationList().size(), gw.getCiv().getPopCiv(), gw.getWorldAge());
     }
     
     // opens TileStats window
