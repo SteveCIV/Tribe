@@ -30,7 +30,6 @@ public class TileStatsPopup {
             label2 = new Label("Acre: Passable " + a.getPassable() + ", Food " + a.getFood());
             label3 = new Label("Member: Str " + m.getStregth() + ", Born " + m.getBorn());
         } catch(NullPointerException e) {}
-        //Label label4 = new Label("World Age: " + worldAge);
 
         VBox layout = new VBox(10);
         layout.getChildren().addAll(label1, label2, label3);

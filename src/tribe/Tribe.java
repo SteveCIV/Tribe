@@ -91,7 +91,7 @@ public class Tribe extends Application {
                 
                 // finds member
                 Coordinate cord = new Coordinate(xCord, yCord);
-                Member m = new Member();
+                Member m = null;
                 for(Civilization c : gw.getCivList()) {
                     for(Nation n : c.getNationList()) {
                         Member mTest = n.findMember(cord, n.getMemberList());
