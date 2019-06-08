@@ -3,6 +3,7 @@ package tribe;
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
 import java.util.Random;
+import static tribe.Tribe.gw;
 
 /**
  *
@@ -10,20 +11,22 @@ import java.util.Random;
  */
 public class GameWorld {
     private final Map land;
-    private ArrayList<Civilization> civ;
+    private ArrayList<Civilization> civs;
     private ArrayList<Coordinate> occTiles;
+    private Tree society;
     private int worldAge;
     
     public GameWorld() throws FileNotFoundException {
         land = new Map();
-        civ = new ArrayList();
+        civs = new ArrayList();
         occTiles = new ArrayList();
+        society = new Tree();
         worldAge = 0;
     }
     
     // moves civilizatoin, setWorldOlder
     public void generateNewYear() {
-        for(Civilization c : civ) {
+        for(Civilization c : civs) {
             c.randMoveAllNation(land);
         }
         setWorldOlder();
@@ -42,17 +45,18 @@ public class GameWorld {
     
     // sets civilization
     public void setCiv(Civilization civ) {
-        this.civ.add(civ);
+        this.civs.add(civ);
     }
     
     // returns civilization
     public ArrayList<Civilization> getCivList() {
-        return civ;
+        return civs;
     }
     
     // creates a new civilization of given nation size and member size and adds to civilization list
     public void addCiv(int popNat, int popMem, int year) {
         Civilization c = new Civilization();
+        society.setBase(new TNode(c));
         for(int i = 0; i < popNat; i++) {
             Nation n = new Nation();
             for(int j = 0; j < popMem; j++) {
@@ -69,7 +73,7 @@ public class GameWorld {
                 // find tile
                 Acre aMove = land.getAcre(rX, rY);
 
-                // find member, test if occupied by any member in any civ
+                // find member, test if occupied by any member in any civs
                 Member mMove = new Member(rC);
                 Member testMove = Civilization.findMember(mMove.getCords(), c.getNationList());
 
@@ -84,7 +88,7 @@ public class GameWorld {
             }
             c.addNation(n);
         }
-        civ.add(c);
+        civs.add(c);
     }
     
     public void addTile(Coordinate c) {

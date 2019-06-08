@@ -39,7 +39,7 @@ public class Tribe extends Application {
     
     @Override
     public void start(Stage window) throws Exception {
-        gw = new GameWorld(); // TODO: will use user provied input
+        gw = new GameWorld();
         
         // components for scene menuMain
         Label label1 = new Label("Welcome to Tribe");
