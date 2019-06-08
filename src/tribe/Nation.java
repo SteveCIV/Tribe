@@ -10,31 +10,28 @@ import javafx.scene.paint.Color;
  */
 public class Nation {
     private ArrayList<Member> members;
+    private ArrayList<Coordinate> occTiles;
     Random r = new Random();
     public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
     Nation() {
         this.members = new ArrayList();
+        this.occTiles = new ArrayList();
     }
     
     Nation(int pop, int year) {
         this.members = new ArrayList();
+        this.occTiles = new ArrayList();
     }
     
     Nation(ArrayList<Member> m) {
         this.members = m;
-    }
-    
-    // adds member a given (x, y) and birth year 
-    // unsafe method! does not check if square is a valid place for member to exist
-    public void addMember(Coordinate c, int yearBorn) {
-        Member newMember = new Member(c, yearBorn);
-        members.add(newMember);
+        this.occTiles = new ArrayList();
     }
     
     // moves every member of tribe to valid location
     // inefficient method! copies an entire map and barely uses it
-    public void randMoveAllMember(Map land) {
+    public void randMoveAllMember(Map land, ArrayList<Civilization> civ, ArrayList<Coordinate> occTiles) {
         for(Member m : members) {
             
             // collider member cords
@@ -73,7 +70,12 @@ public class Nation {
             }
             
             // collidee
-            Member testMove = findMember(mMove.getCords(), members);
+            Member testMove = null;
+            for(Coordinate c : occTiles) {
+                if(mMove.getCords().getX() == c.getX() && mMove.getCords().getY() == c.getY()) {
+                    testMove = GameWorld.findMember(c);
+                }
+            }
             Tile collidee = new Tile(testMove, aMove);
             
             // moves member if movement is valid
@@ -107,7 +109,7 @@ public class Nation {
         }
     }
     
-    // SETTERS && GETTERS
+    // SETTERS && GETTERS && ADDERS
     // sets member list
     public void setMemberList(ArrayList<Member> n) {
         this.members = n;
@@ -118,8 +120,24 @@ public class Nation {
         return members;
     }
     
+    // adds member a given (x, y) and birth year 
+    // unsafe method! does not check if square is a valid place for member to exist
+    public void addMember(Coordinate c, int yearBorn) {
+        Member newMember = new Member(c, yearBorn);
+        occTiles.add(c);
+        members.add(newMember);
+    }
+    
     // returns popNation
     public int getNationPop() {
         return members.size();
+    }
+    
+    public ArrayList<Coordinate> getOccTiles() {
+        return occTiles;
+    }
+    
+    public void addTile(Coordinate c) {
+        occTiles.add(c);
     }
 }

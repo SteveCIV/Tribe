@@ -9,22 +9,25 @@ import java.util.Random;
  */
 public class Civilization {
     private ArrayList<Nation> nations;
+    private ArrayList<Coordinate> occTiles;
     private int popCiv;
     
     public Civilization() {
         this.nations = new ArrayList();
+        this.occTiles = new ArrayList();
         this.popCiv = 0;
     }
     
     public Civilization(int popNation, int popMember) {
         this.nations = new ArrayList();
+        this.occTiles = new ArrayList();
         this.popCiv = 0;
     }
     
     // moves all nations
-    public void randMoveAllNation(Map land) {
+    public void randMoveAllNation(Map land, ArrayList<Civilization> civ, ArrayList<Coordinate> occTiles) {
         for(Nation n : nations) {
-            n.randMoveAllMember(land);
+            n.randMoveAllMember(land, civ, occTiles);
         }
     }
     
@@ -96,5 +99,14 @@ public class Civilization {
         }
         popCiv = tempPop;
         return popCiv;
+    }
+    
+    public ArrayList<Coordinate> getOccTiles() {
+        return occTiles;
+    }
+    
+    // adds cords to occupied tile list
+    public void addTile(ArrayList<Coordinate> c) {
+        occTiles.addAll(c);
     }
 }

@@ -10,21 +10,33 @@ import java.util.Random;
  */
 public class GameWorld {
     private final Map land;
-    private ArrayList<Civilization> civ;
+    private ArrayList<Civilization> civs;
+    private ArrayList<Coordinate> occTiles;
     private int worldAge;
     
     public GameWorld() throws FileNotFoundException {
-        land = new Map();
-        civ = new ArrayList();
-        worldAge = 0;
+        this.land = new Map();
+        this.civs = new ArrayList();
+        this.occTiles = new ArrayList();
+        this.worldAge = 0;
     }
     
     // moves civilizatoin, setWorldOlder
     public void generateNewYear() {
-        for(Civilization c : civ) {
-            c.randMoveAllNation(land);
+        for(Civilization c : civs) {
+            c.randMoveAllNation(land, civs, occTiles);
         }
         setWorldOlder();
+    }
+    
+    public static Member findMember(Coordinate cord) {
+        Member mem = null;
+//        for(Civilization c : civs) {
+//            for(Nation n : c.getNationList()) {
+//                mem = c.findMember(cord, c.getNationList());
+//            }
+//        }
+        return mem;
     }
     
     // GETTERS && SETTERS
@@ -40,12 +52,12 @@ public class GameWorld {
     
     // sets civilization
     public void setCiv(Civilization civ) {
-        this.civ.add(civ);
+        this.civs.add(civ);
     }
     
     // returns civilization
     public ArrayList<Civilization> getCivList() {
-        return civ;
+        return civs;
     }
     
     // creates a new civilization of given nation size and member size and adds to civilization list
@@ -67,7 +79,7 @@ public class GameWorld {
                 // find tile
                 Acre aMove = land.getAcre(rX, rY);
 
-                // find member, test if occupied by any member in any civ
+                // find member, test if occupied by any member in any civs
                 Member mMove = new Member(rC);
                 Member testMove = Civilization.findMember(mMove.getCords(), c.getNationList());
 
@@ -82,7 +94,7 @@ public class GameWorld {
             }
             c.addNation(n);
         }
-        civ.add(c);
+        civs.add(c);
     }
     
     // worldAge++
@@ -93,5 +105,14 @@ public class GameWorld {
     // returns worldAge
     public int getWorldAge() {
         return worldAge;
+    }
+    
+    public ArrayList<Coordinate> getOccTiles() {
+        return occTiles;
+    }
+    
+    // adds cords to occupied tile list
+    public void addTiles(ArrayList<Coordinate> c) {
+        occTiles.addAll(c);
     }
 }
