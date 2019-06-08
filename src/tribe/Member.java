@@ -6,7 +6,6 @@ package tribe;
  */
 public class Member {
     private Coordinate cord;
-    private Nation nationAlity;
     private double stregth;
     private final int born;
     
@@ -16,15 +15,15 @@ public class Member {
         this.born = -1;
     }
     
-    Member(Coordinate c) {
-        this.cord = new Coordinate(c.getX(), c.getY());
-        this.stregth = 0.0;
-        this.born = -1;
-    }
+//    Member(Coordinate c) {
+//        this.cord = new Coordinate(c.getX(), c.getY());
+//        this.stregth = 0.0;
+//        this.born = -1;
+//    }
     
     Member(Coordinate c, int yearBorn) {
         this.cord = new Coordinate(c.getX(), c.getY());
-        stregth = 0.0;
+        this.stregth = 0.0;
         this.born = yearBorn;
     }
 

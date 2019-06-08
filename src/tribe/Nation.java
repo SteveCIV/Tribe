@@ -17,22 +17,25 @@ public class Nation {
     
     Nation() {
         this.members = new ArrayList();
-        this.occTiles = new ArrayList();
     }
     
     Nation(int pop, int year) {
         this.members = new ArrayList();
-        this.occTiles = new ArrayList();
     }
     
     Nation(ArrayList<Member> m) {
         this.members = m;
-        this.occTiles = new ArrayList();
     }
+    
+    // adds member a given (x, y) and birth year 
+    // unsafe method! does not check if square is a valid place for member to exist
+//    public void addMember(Coordinate c, int yearBorn) {
+//        members.add(newMember);
+//    }
     
     // moves every member of tribe to valid location
     // inefficient method! copies an entire map and barely uses it
-    public void randMoveAllMember(Map land, ArrayList<Civilization> civ, ArrayList<Coordinate> occTiles) {
+    public void randMoveAllMember(Map land) {
         for(Member m : members) {
             
             // collider member cords
@@ -77,6 +80,7 @@ public class Nation {
                     testMove = GameWorld.findMember(c, civ);
                 }
             }
+            Member testMove = findMember(mMove.getCords(), members);
             Tile collidee = new Tile(testMove, aMove);
             
             // moves member if movement is valid
@@ -110,7 +114,7 @@ public class Nation {
         }
     }
     
-    // SETTERS && GETTERS && ADDERS
+    // SETTERS && GETTERS
     // sets member list
     public void setMemberList(ArrayList<Member> n) {
         this.members = n;

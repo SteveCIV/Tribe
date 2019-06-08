@@ -15,20 +15,18 @@ public class Civilization {
     
     public Civilization() {
         this.nations = new ArrayList();
-        this.occTiles = new ArrayList();
         this.popCiv = 0;
     }
     
     public Civilization(int popNation, int popMember) {
         this.nations = new ArrayList();
-        this.occTiles = new ArrayList();
         this.popCiv = 0;
     }
     
     // moves all nations
-    public void randMoveAllNation(Map land, ArrayList<Civilization> civ, ArrayList<Coordinate> occTiles) {
+    public void randMoveAllNation(Map land) {
         for(Nation n : nations) {
-            n.randMoveAllMember(land, civ, occTiles);
+            n.randMoveAllMember(land);
         }
     }
     
