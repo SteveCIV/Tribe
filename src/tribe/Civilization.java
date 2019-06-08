@@ -69,6 +69,15 @@ public class Civilization {
 //        civ.addNation(n);
 //    }
     
+    public static Member findMember(Coordinate c, ArrayList<Nation> nations) {
+        for(Nation n : nations) {
+            if(n.findMember(c, n.getMemberList()) != null) {
+                return n.findMember(c, n.getMemberList());
+            }
+        }
+        return null;
+    }
+    
     // SETTERS && GETTERS
     // set nation list
     public void setNationList(ArrayList<Nation> nations) {

@@ -22,7 +22,7 @@ public class GlobalStatsPopup {
         
         Label label1 = new Label("Number of Civilizations: " + civNumber);
         Label label2 = new Label("Number of Nations:" + natNumber);
-        Label label3 = new Label("Population of the world: " + memNumber);
+        Label label3 = new Label("Number of Members: " + memNumber);
         Label label4 = new Label("World Age: " + worldAge);
                 
         VBox layout = new VBox(10);

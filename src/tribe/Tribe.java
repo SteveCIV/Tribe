@@ -218,7 +218,18 @@ public class Tribe extends Application {
     
     // opens GlobalStats window
     public void showGlobalStats() {
-//        GlobalStatsPopup.display("Global Statistics", 1, gw.getCiv().getNationList().size(), gw.getCiv().getPopCiv(), gw.getWorldAge());
+        int numCiv = 0;
+        int numNat = 0;
+        int numMem = 0;
+        for(Civilization c : gw.getCivList()) {
+            for(Nation n : c.getNationList()) {
+                numMem += n.getNationPop();
+                numNat++;
+            }
+            numCiv++;
+        }
+        
+        GlobalStatsPopup.display("Global Statistics", numCiv, numNat, numMem, gw.getWorldAge());
     }
     
     // opens TileStats window
