@@ -9,8 +9,11 @@ import java.util.Random;
  */
 public class Civilization {
     private ArrayList<Nation> nations;
+<<<<<<< HEAD
     private ArrayList<Coordinate> occTiles;
     private GameWorld gameWorldAlity;
+=======
+>>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
     private int popCiv;
     
     public Civilization() {
@@ -99,6 +102,7 @@ public class Civilization {
         popCiv = tempPop;
         return popCiv;
     }
+<<<<<<< HEAD
     
     public ArrayList<Coordinate> getOccTiles() {
         return occTiles;
@@ -109,4 +113,6 @@ public class Civilization {
         occTiles.add(c);
         gameWorldAlity.addTiles(c);
     }
+=======
+>>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
 }
