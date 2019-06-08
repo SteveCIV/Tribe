@@ -11,8 +11,11 @@ import javafx.scene.paint.Color;
 public class Nation {
     private ArrayList<Member> members;
 <<<<<<< HEAD
+<<<<<<< HEAD
     private ArrayList<Coordinate> occTiles;
     private Civilization civilAlity;
+=======
+>>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
 =======
 >>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
     Random r = new Random();
@@ -29,7 +32,17 @@ public class Nation {
     Nation(ArrayList<Member> m) {
         this.members = m;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+    }
+    
+    // adds member a given (x, y) and birth year 
+    // unsafe method! does not check if square is a valid place for member to exist
+    public void addMember(Coordinate c, int yearBorn) {
+        Member newMember = new Member(c, yearBorn);
+        members.add(newMember);
+>>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
     }
     
     // adds member a given (x, y) and birth year 
@@ -88,12 +101,15 @@ public class Nation {
             
             // collidee
 <<<<<<< HEAD
+<<<<<<< HEAD
             Member testMove = null;
             for(Coordinate c : occTiles) {
                 if(mMove.getCords().getX() == c.getX() && mMove.getCords().getY() == c.getY()) {
                     testMove = GameWorld.findMember(c, civ);
                 }
             }
+=======
+>>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
 =======
 >>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
             Member testMove = findMember(mMove.getCords(), members);
@@ -142,6 +158,7 @@ public class Nation {
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     // adds member a given (x, y) and birth year 
     // unsafe method! does not check if square is a valid place for member to exist
     public void addMember(Coordinate c, int yearBorn) {
@@ -152,10 +169,13 @@ public class Nation {
     
 =======
 >>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
+=======
+>>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
     // returns popNation
     public int getNationPop() {
         return members.size();
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     public ArrayList<Coordinate> getOccTiles() {
@@ -166,6 +186,8 @@ public class Nation {
         occTiles.add(c);
         civilAlity.addTile(c);
     }
+=======
+>>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
 =======
 >>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
 }
