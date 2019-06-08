@@ -67,9 +67,9 @@ public class GameWorld {
                 // find tile
                 Acre aMove = land.getAcre(rX, rY);
 
-                // find member, test if occupied 
+                // find member, test if occupied by any member in any civ
                 Member mMove = new Member(rC);
-                Member testMove = Nation.findMember(mMove.getCords(), n.getMemberList());
+                Member testMove = Civilization.findMember(mMove.getCords(), c.getNationList());
 
                 // create collidee
                 Tile collidee = new Tile(testMove, aMove);

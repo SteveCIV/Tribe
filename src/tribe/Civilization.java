@@ -36,6 +36,27 @@ public class Civilization {
         }
     }
     
+    public static Member findMember(Coordinate c, ArrayList<Nation> nations) {
+        for(Nation n : nations) {
+            Member m = n.findMember(c, n.getMemberList());
+            if(m != null) {
+                return m;
+            }
+        }
+        return null;
+    }
+    
+    // SETTERS && GETTERS && ADDERS
+    // set nation list
+    public void setNationList(ArrayList<Nation> nations) {
+        this.nations = nations;
+    }
+    
+    // returns nation list
+    public ArrayList<Nation> getNationList() {
+        return nations;
+    }
+    
     // creates a new nation of given size and adds to nation list
 //    public void addNation(int pop, int year) {
 //        Nation n = new Nation();
@@ -66,28 +87,8 @@ public class Civilization {
 //                n.addMember(rC, year);
 //            }
 //        }
-//        civ.addNation(n);
+//        nations.add(n);
 //    }
-    
-    public static Member findMember(Coordinate c, ArrayList<Nation> nations) {
-        for(Nation n : nations) {
-            if(n.findMember(c, n.getMemberList()) != null) {
-                return n.findMember(c, n.getMemberList());
-            }
-        }
-        return null;
-    }
-    
-    // SETTERS && GETTERS
-    // set nation list
-    public void setNationList(ArrayList<Nation> nations) {
-        this.nations = nations;
-    }
-    
-    // returns nation list
-    public ArrayList<Nation> getNationList() {
-        return nations;
-    }
     
     // popNation++ && popNation--
     private void setPopNationLarger() {
