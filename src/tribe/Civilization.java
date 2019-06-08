@@ -9,23 +9,18 @@ import java.util.Random;
  */
 public class Civilization {
     private ArrayList<Nation> nations;
-<<<<<<< HEAD
-<<<<<<< HEAD
     private ArrayList<Coordinate> occTiles;
-    private GameWorld gameWorldAlity;
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
     private int popCiv;
     
     public Civilization() {
         this.nations = new ArrayList();
+        this.occTiles = new ArrayList();
         this.popCiv = 0;
     }
     
     public Civilization(int popNation, int popMember) {
         this.nations = new ArrayList();
+        this.occTiles = new ArrayList();
         this.popCiv = 0;
     }
     
@@ -105,8 +100,6 @@ public class Civilization {
         popCiv = tempPop;
         return popCiv;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     
     public ArrayList<Coordinate> getOccTiles() {
         return occTiles;
@@ -115,10 +108,5 @@ public class Civilization {
     // adds cords to occupied tile list
     public void addTile(Coordinate c) {
         occTiles.add(c);
-        gameWorldAlity.addTiles(c);
     }
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
 }

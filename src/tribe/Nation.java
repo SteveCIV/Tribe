@@ -10,54 +10,24 @@ import javafx.scene.paint.Color;
  */
 public class Nation {
     private ArrayList<Member> members;
-<<<<<<< HEAD
-<<<<<<< HEAD
     private ArrayList<Coordinate> occTiles;
-    private Civilization civilAlity;
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
     Random r = new Random();
     public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
     Nation() {
         this.members = new ArrayList();
+        this.occTiles = new ArrayList();
     }
     
     Nation(int pop, int year) {
         this.members = new ArrayList();
+        this.occTiles = new ArrayList();
     }
     
     Nation(ArrayList<Member> m) {
         this.members = m;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
+        this.occTiles = new ArrayList();
     }
-    
-    // adds member a given (x, y) and birth year 
-    // unsafe method! does not check if square is a valid place for member to exist
-    public void addMember(Coordinate c, int yearBorn) {
-        Member newMember = new Member(c, yearBorn);
-        members.add(newMember);
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-    }
-    
-    // adds member a given (x, y) and birth year 
-    // unsafe method! does not check if square is a valid place for member to exist
-    public void addMember(Coordinate c, int yearBorn) {
-        Member newMember = new Member(c, yearBorn);
-        members.add(newMember);
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-    }
-    
-    // adds member a given (x, y) and birth year 
-    // unsafe method! does not check if square is a valid place for member to exist
-//    public void addMember(Coordinate c, int yearBorn) {
-//        members.add(newMember);
-//    }
     
     // moves every member of tribe to valid location
     // inefficient method! copies an entire map and barely uses it
@@ -100,19 +70,12 @@ public class Nation {
             }
             
             // collidee
-<<<<<<< HEAD
-<<<<<<< HEAD
             Member testMove = null;
             for(Coordinate c : occTiles) {
                 if(mMove.getCords().getX() == c.getX() && mMove.getCords().getY() == c.getY()) {
-                    testMove = GameWorld.findMember(c, civ);
+                    //testMove = GameWorld.findMember(c, civ);
                 }
             }
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-            Member testMove = findMember(mMove.getCords(), members);
             Tile collidee = new Tile(testMove, aMove);
             
             // moves member if movement is valid
@@ -156,9 +119,7 @@ public class Nation {
     public ArrayList<Member> getMemberList() {
         return members;
     }
-    
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     // adds member a given (x, y) and birth year 
     // unsafe method! does not check if square is a valid place for member to exist
     public void addMember(Coordinate c, int yearBorn) {
@@ -167,16 +128,10 @@ public class Nation {
         members.add(newMember);
     }
     
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
     // returns popNation
     public int getNationPop() {
         return members.size();
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     
     public ArrayList<Coordinate> getOccTiles() {
         return occTiles;
@@ -184,10 +139,5 @@ public class Nation {
     
     public void addTile(Coordinate c) {
         occTiles.add(c);
-        civilAlity.addTile(c);
     }
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
-=======
->>>>>>> parent of cd9119a... Addded members occupied ArrayList<Coordinate>
 }

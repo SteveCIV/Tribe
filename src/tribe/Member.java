@@ -15,11 +15,11 @@ public class Member {
         this.born = -1;
     }
     
-//    Member(Coordinate c) {
-//        this.cord = new Coordinate(c.getX(), c.getY());
-//        this.stregth = 0.0;
-//        this.born = -1;
-//    }
+    Member(Coordinate c) {
+        this.cord = new Coordinate(c.getX(), c.getY());
+        this.stregth = 0.0;
+        this.born = -1;
+    }
     
     Member(Coordinate c, int yearBorn) {
         this.cord = new Coordinate(c.getX(), c.getY());
