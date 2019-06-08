@@ -28,6 +28,7 @@ public class Tribe extends Application {
     public static final Color SEASONALFOREST = Color.rgb(77, 255, 77);
     public static final Color SAVANNA = Color.rgb(144, 255, 77);
     public static final Color DESERT = Color.rgb(212, 255, 77);
+    public static final Color WASTELAND = Color.rgb(166, 166, 157);
     
     
     Stage window;
@@ -136,7 +137,7 @@ public class Tribe extends Application {
                     } else if(acre.getFood() > 0.0){
                         gc.setFill(DESERT);
                     } else {
-                        gc.setFill(Color.GRAY);
+                        gc.setFill(WASTELAND);
                     }
                     gc.fillRect(i * 5, j * 5, 5, 5);
                 }
