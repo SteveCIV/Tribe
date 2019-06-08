@@ -2,6 +2,7 @@ package tribe;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public class Tribe extends Application {
     
     
     Stage window;
-    Scene mainMenu, initalWorld;
+    Scene mainMenu, newGameMenu, savedGameMenu, currentGame;
     GraphicsContext gc;
     
     @Override
@@ -40,40 +41,47 @@ public class Tribe extends Application {
         
         // components for scene1
         Label label1 = new Label("Welcome to Tribe");
-        Button button1 = new Button();
-        button1.setText("Start new game");
-        button1.setOnAction(e -> window.setScene(initalWorld));
+        Button buttonNewGame = new Button();
+        buttonNewGame.setText("New game");
+        buttonNewGame.setOnAction(e -> window.setScene(currentGame));
+        Button buttonSavedGame = new Button();
+        buttonSavedGame.setText("Saved Games");
+        buttonSavedGame.setOnAction(e -> window.setScene(currentGame)); // TODO: will go to saved games
+        Button buttonExit = new Button();
+        buttonExit.setText("Exit");
+        buttonExit.setOnAction(e -> window.close());
         
         // adding components to layout
         VBox layout1 = new VBox();
-        layout1.getChildren().addAll(label1, button1);
+        layout1.setAlignment(Pos.CENTER);
+        layout1.setSpacing(20);
+        layout1.getChildren().addAll(label1, buttonNewGame, buttonSavedGame, buttonExit);
         
         // adding layout to scene mainMenu
-        mainMenu = new Scene(layout1, 200, 200);
+        mainMenu = new Scene(layout1, 400, 200);
         
-        // will be replaced with user provied input
         gw = new GameWorld();
-        gw.setNewNation(1000, gw.getWorldAge());
+        gw.setNewNation(1000, gw.getWorldAge()); // TODO: will use user provied input
         
-        // components for scene2
-        Button button2 = new Button();
-        button2.setText("Next Year (x  1)");
-        button2.setOnAction(e -> newYear());
-        Button button3 = new Button();
-        button3.setText("Next Year (x 10)");
-        button3.setOnAction(e -> newYear(10));
-        Button button4 = new Button();
-        button4.setText("Next Year (x100)");
-        button4.setOnAction(e -> newYear(100));
-        Button button5 = new Button();
-        button5.setText("Game stats");
-        button5.setOnAction(e -> showGlobalStats());
-        Button button6 = new Button();
-        button6.setText("Main Menu");
-        button6.setOnAction(e -> window.setScene(mainMenu));
-        ToolBar toolBar = new ToolBar(button2, button3, button4, button5, button6);
+        // components for scene current save
+        Button buttonNextYear1 = new Button();
+        buttonNextYear1.setText("Next Year (x  1)");
+        buttonNextYear1.setOnAction(e -> newYear());
+        Button buttonNextYear10 = new Button();
+        buttonNextYear10.setText("Next Year (x 10)");
+        buttonNextYear10.setOnAction(e -> newYear(10));
+        Button buttonNextYear100 = new Button();
+        buttonNextYear100.setText("Next Year (x100)");
+        buttonNextYear100.setOnAction(e -> newYear(100));
+        Button buttonStats = new Button();
+        buttonStats.setText("Game stats");
+        buttonStats.setOnAction(e -> showGlobalStats());
+        Button buttonMainMenu = new Button();
+        buttonMainMenu.setText("Main Menu");
+        buttonMainMenu.setOnAction(e -> window.setScene(mainMenu));
+        ToolBar toolBar = new ToolBar(buttonNextYear1, buttonNextYear10, buttonNextYear100, buttonStats, buttonMainMenu);
         
-        // canvas component for scene2
+        // canvas component for initial world
         Canvas canvas = new Canvas(5 * WIDTH, 5 * HEIGHT);
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, 
         new EventHandler<MouseEvent>() {
@@ -99,12 +107,12 @@ public class Tribe extends Application {
         drawGameWorld(gc);
         
         // adding components to layout
-        BorderPane layout2 = new BorderPane();
-        layout2.setTop(toolBar);
-        layout2.setLeft(canvas);
+        BorderPane layoutActiveSave = new BorderPane();
+        layoutActiveSave.setTop(toolBar);
+        layoutActiveSave.setLeft(canvas);
         
-        // adding layout to scene initalWorld
-        initalWorld = new Scene(layout2, 5 * WIDTH, 5 * HEIGHT + 45);
+        // adding layout to scene currentGame
+        currentGame = new Scene(layoutActiveSave, 5 * WIDTH, 5 * HEIGHT + 45);
         
         window.setTitle("Tribe (300x164)");
         window.setResizable(false);
