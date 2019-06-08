@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 public class Nation {
     private ArrayList<Member> members;
     private ArrayList<Coordinate> occTiles;
+    private Civilization civilAlity;
     Random r = new Random();
     public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
@@ -73,7 +74,7 @@ public class Nation {
             Member testMove = null;
             for(Coordinate c : occTiles) {
                 if(mMove.getCords().getX() == c.getX() && mMove.getCords().getY() == c.getY()) {
-                    testMove = GameWorld.findMember(c);
+                    testMove = GameWorld.findMember(c, civ);
                 }
             }
             Tile collidee = new Tile(testMove, aMove);
@@ -124,7 +125,7 @@ public class Nation {
     // unsafe method! does not check if square is a valid place for member to exist
     public void addMember(Coordinate c, int yearBorn) {
         Member newMember = new Member(c, yearBorn);
-        occTiles.add(c);
+        addTile(c);
         members.add(newMember);
     }
     
@@ -139,5 +140,6 @@ public class Nation {
     
     public void addTile(Coordinate c) {
         occTiles.add(c);
+        civilAlity.addTile(c);
     }
 }

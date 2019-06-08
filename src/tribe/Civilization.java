@@ -10,6 +10,7 @@ import java.util.Random;
 public class Civilization {
     private ArrayList<Nation> nations;
     private ArrayList<Coordinate> occTiles;
+    private GameWorld gameWorldAlity;
     private int popCiv;
     
     public Civilization() {
@@ -106,7 +107,8 @@ public class Civilization {
     }
     
     // adds cords to occupied tile list
-    public void addTile(ArrayList<Coordinate> c) {
-        occTiles.addAll(c);
+    public void addTile(Coordinate c) {
+        occTiles.add(c);
+        gameWorldAlity.addTiles(c);
     }
 }

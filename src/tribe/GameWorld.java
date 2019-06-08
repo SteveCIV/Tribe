@@ -11,7 +11,7 @@ import java.util.Random;
 public class GameWorld {
     private final Map land;
     private ArrayList<Civilization> civs;
-    private ArrayList<Coordinate> occTiles;
+    private static ArrayList<Coordinate> occTiles;
     private int worldAge;
     
     public GameWorld() throws FileNotFoundException {
@@ -29,13 +29,13 @@ public class GameWorld {
         setWorldOlder();
     }
     
-    public static Member findMember(Coordinate cord) {
+    public static Member findMember(Coordinate cord, ArrayList<Civilization> civs) {
         Member mem = null;
-//        for(Civilization c : civs) {
-//            for(Nation n : c.getNationList()) {
-//                mem = c.findMember(cord, c.getNationList());
-//            }
-//        }
+        for(Civilization c : civs) {
+            for(Nation n : c.getNationList()) {
+                mem = n.findMember(cord, n.getMemberList());
+            }
+        }
         return mem;
     }
     
@@ -112,7 +112,7 @@ public class GameWorld {
     }
     
     // adds cords to occupied tile list
-    public void addTiles(ArrayList<Coordinate> c) {
-        occTiles.addAll(c);
+    public void addTiles(Coordinate c) {
+        occTiles.add(c);
     }
 }

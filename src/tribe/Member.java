@@ -6,6 +6,7 @@ package tribe;
  */
 public class Member {
     private Coordinate cord;
+    private Nation nationAlity;
     private double stregth;
     private final int born;
     
