@@ -9,24 +9,16 @@ import java.util.Random;
  */
 public class Civilization {
     private ArrayList<Nation> nations;
-    private int popNation;
     private int popCiv;
     
     public Civilization() {
         this.nations = new ArrayList();
-        this.popNation = nations.size();
         this.popCiv = 0;
     }
     
     public Civilization(int popNation, int popMember) {
         this.nations = new ArrayList();
-        this.popNation = nations.size();
         this.popCiv = 0;
-    }
-    
-    public void addNation(Nation newNation) {
-        nations.add(newNation);
-        setPopNationLarger();
     }
     
     // moves all nations
@@ -58,53 +50,45 @@ public class Civilization {
     }
     
     // creates a new nation of given size and adds to nation list
-//    public void addNation(int pop, int year) {
-//        Nation n = new Nation();
-//        for (int i = 0; i < pop; i++) {
-//            Random r1 = new Random();
-//            int rX = r1.nextInt(Tribe.WIDTH);
-//            Random r2 = new Random();
-//            int rY = r2.nextInt(Tribe.HEIGHT);
-//            Coordinate rC = new Coordinate(rX, rY);
-//
-//            // create collider
-//            Member m = new Member(rC, year);
-//            Tile collider = new Tile(m);
-//
-//            // find tile
-//            Acre aMove = land.getAcre(rX, rY);
-//
-//            // find member, test if occupied 
-//            Member mMove = new Member(rC);
-//            Member testMove = Nation.findMember(mMove.getCords(), n.getMemberList());
-//
-//            // create collidee
-//            Tile collidee = new Tile(testMove, aMove);
-//            TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
-//            if (!canCollide.memberToTileCollide()) {
-//                i--;
-//            } else {
-//                n.addMember(rC, year);
-//            }
-//        }
-//        nations.add(n);
-//    }
+    // untested!
+    public void addNation(int pop, int year, Map land) {
+        Nation n = new Nation();
+        for (int i = 0; i < pop; i++) {
+            Random r1 = new Random();
+            int rX = r1.nextInt(Tribe.WIDTH);
+            Random r2 = new Random();
+            int rY = r2.nextInt(Tribe.HEIGHT);
+            Coordinate rC = new Coordinate(rX, rY);
+
+            // create collider
+            Member m = new Member(rC, year);
+            Tile collider = new Tile(m);
+
+            // find tile
+            Acre aMove = land.getAcre(rX, rY);
+
+            // find member, test if occupied 
+            Member mMove = new Member(rC);
+            Member testMove = Nation.findMember(mMove.getCords(), n.getMemberList());
+
+            // create collidee
+            Tile collidee = new Tile(testMove, aMove);
+            TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
+            if (!canCollide.memberToTileCollide()) {
+                i--;
+            } else {
+                n.addMember(rC, year);
+            }
+        }
+        nations.add(n);
+    } 
     
-    // popNation++ && popNation--
-    private void setPopNationLarger() {
-        popNation++;
-    }
-    private void setPopNationSmaller() {
-        popNation--;
+    // adds new nation and adds to nation list
+    public void addNation(Nation newNation) {
+        nations.add(newNation);
     }
     
-    // returns popNation
-    public int getPopNation() {
-        popNation = nations.size();
-        return popNation;
-    }
-    
-    // returns popWorld
+    // returns popCiv
     public int getPopCiv() {
         int tempPop = 0;
         for(Nation n : nations) {

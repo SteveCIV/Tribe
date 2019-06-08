@@ -10,23 +10,19 @@ import javafx.scene.paint.Color;
  */
 public class Nation {
     private ArrayList<Member> members;
-    private int popNation;
     Random r = new Random();
     public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
     Nation() {
         this.members = new ArrayList();
-        this.popNation = members.size();
     }
     
     Nation(int pop, int year) {
         this.members = new ArrayList();
-        this.popNation = members.size();
     }
     
     Nation(ArrayList<Member> m) {
         this.members = m;
-        this.popNation = members.size();
     }
     
     // adds member a given (x, y) and birth year 
@@ -34,7 +30,6 @@ public class Nation {
     public void addMember(Coordinate c, int yearBorn) {
         Member newMember = new Member(c, yearBorn);
         members.add(newMember);
-        setNationPopLarger();
     }
     
     // moves every member of tribe to valid location
@@ -123,17 +118,8 @@ public class Nation {
         return members;
     }
     
-    // popNation++ && popNation--
-    private void setNationPopLarger() {
-        popNation++;
-    }
-    private void setNationPopSmaller() {
-        popNation--;
-    }
-    
     // returns popNation
     public int getNationPop() {
-        popNation = members.size();
-        return popNation;
+        return members.size();
     }
 }

@@ -48,7 +48,7 @@ public class GameWorld {
         return civ;
     }
     
-    // creates a new civilization of given size and adds to nation list
+    // creates a new civilization of given nation size and member size and adds to civilization list
     public void addCiv(int popNat, int popMem, int year) {
         Civilization c = new Civilization();
         for(int i = 0; i < popNat; i++) {

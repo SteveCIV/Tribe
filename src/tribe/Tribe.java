@@ -92,8 +92,6 @@ public class Tribe extends Application {
                 // finds member
                 Coordinate cord = new Coordinate(xCord, yCord);
                 Member m = new Member();
-                
-                // only finds most recently added nation
                 for(Civilization c : gw.getCivList()) {
                     for(Nation n : c.getNationList()) {
                         Member mTest = n.findMember(cord, n.getMemberList());
