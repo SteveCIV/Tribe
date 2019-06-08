@@ -7,8 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -33,20 +35,20 @@ public class Tribe extends Application {
     
     
     Stage window;
-    Scene mainMenu, newGameMenu, savedGameMenu, currentGame;
+    Scene menuMain, menuNewGame, menuSavedGame, currentGame;
     GraphicsContext gc;
     
     @Override
     public void start(Stage window) throws Exception {
         
-        // components for scene1
+        // components for scene menuMain
         Label label1 = new Label("Welcome to Tribe");
         Button buttonNewGame = new Button();
         buttonNewGame.setText("New game");
-        buttonNewGame.setOnAction(e -> window.setScene(currentGame));
+        buttonNewGame.setOnAction(e -> window.setScene(menuNewGame)); // TODO: will go to new game menu
         Button buttonSavedGame = new Button();
         buttonSavedGame.setText("Saved Games");
-        buttonSavedGame.setOnAction(e -> window.setScene(currentGame)); // TODO: will go to saved games
+        buttonSavedGame.setOnAction(e -> window.setScene(currentGame)); // TODO: will go to saved games menu
         Button buttonExit = new Button();
         buttonExit.setText("Exit");
         buttonExit.setOnAction(e -> window.close());
@@ -57,13 +59,13 @@ public class Tribe extends Application {
         layout1.setSpacing(20);
         layout1.getChildren().addAll(label1, buttonNewGame, buttonSavedGame, buttonExit);
         
-        // adding layout to scene mainMenu
-        mainMenu = new Scene(layout1, 400, 200);
+        // adding layout to scene menuMain
+        menuMain = new Scene(layout1, 400, 200);
         
         gw = new GameWorld();
         gw.setNewNation(1000, gw.getWorldAge()); // TODO: will use user provied input
         
-        // components for scene current save
+        // components for scene currentGame
         Button buttonNextYear1 = new Button();
         buttonNextYear1.setText("Next Year (x  1)");
         buttonNextYear1.setOnAction(e -> newYear());
@@ -78,10 +80,10 @@ public class Tribe extends Application {
         buttonStats.setOnAction(e -> showGlobalStats());
         Button buttonMainMenu = new Button();
         buttonMainMenu.setText("Main Menu");
-        buttonMainMenu.setOnAction(e -> window.setScene(mainMenu));
+        buttonMainMenu.setOnAction(e -> window.setScene(menuMain));
         ToolBar toolBar = new ToolBar(buttonNextYear1, buttonNextYear10, buttonNextYear100, buttonStats, buttonMainMenu);
         
-        // canvas component for initial world
+        // canvas component for currentGame
         Canvas canvas = new Canvas(5 * WIDTH, 5 * HEIGHT);
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, 
         new EventHandler<MouseEvent>() {
@@ -114,11 +116,44 @@ public class Tribe extends Application {
         // adding layout to scene currentGame
         currentGame = new Scene(layoutActiveSave, 5 * WIDTH, 5 * HEIGHT + 45);
         
+        // components for menuNewGame
+        Label label2 = new Label("New Tribe");
+        Label label3 = new Label("Number of Civilizations");
+        Slider sliderCiv = new Slider(0, 4, 1);
+        sliderCiv.setShowTickLabels(true);
+        sliderCiv.setMajorTickUnit(1);
+        sliderCiv.setBlockIncrement(1);
+        Label label4 = new Label("Number of Nations per civilization");
+        Slider sliderNat = new Slider(0, 10, 1);
+        sliderNat.setShowTickLabels(true);
+        sliderNat.setMajorTickUnit(1);
+        sliderNat.setBlockIncrement(1);
+        Label label5 = new Label("Number of Members per nation");
+        Slider sliderMem = new Slider(0, 40, 1);
+        sliderMem.setShowTickLabels(true);
+        sliderMem.setMajorTickUnit(1);
+        sliderMem.setBlockIncrement(1);
+        Button buttonStart = new Button();
+        buttonStart.setText("Start Game");
+        buttonStart.setOnAction(e -> window.setScene(currentGame));
+        Button buttonBack = new Button();
+        buttonBack.setText("Back");
+        buttonBack.setOnAction(e -> window.setScene(menuMain));
+        
+        // adding components to layout
+        VBox layout2 = new VBox();
+        layout2.setAlignment(Pos.CENTER);
+        layout2.setSpacing(20);
+        layout2.getChildren().addAll(label2, label3, sliderCiv, label4, sliderNat, label5, sliderMem, buttonStart, buttonBack);
+        
+        // adding layout to scene menuNewGame
+        menuNewGame = new Scene(layout2, 400, 600);
+        
         window.setTitle("Tribe (300x164)");
         window.setResizable(false);
         window.setX(WIDTH);
         window.setY(HEIGHT);
-        window.setScene(mainMenu);
+        window.setScene(menuMain);
         window.show();
     }
     
@@ -173,10 +208,12 @@ public class Tribe extends Application {
         }
     }
     
+    // opens GlobalStats window
     public void showGlobalStats() {
         GlobalStatsPopup.display("Global Statistics", 1, gw.getCiv().getNationList().size(), gw.getCiv().getPopCiv(), gw.getWorldAge());
     }
     
+    // opens TileStats window
     public void showTileStats(Tile t) {
         TileStatsPopup.display("Tile Statistics", t);
     }
