@@ -18,8 +18,8 @@ public class Tree<E> {
         this.size++;
     }
     
-    public void setBase(TNode newAncestor) {
-        base = newAncestor;
+    public void setBase(TNode newBase) {
+        base = newBase;
     }
     public TNode getBase() {
         return base;

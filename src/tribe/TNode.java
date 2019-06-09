@@ -14,11 +14,13 @@ public class TNode<E> {
     public TNode() {
         this.data = null;
         this.children = null;
+        this.parent = null;
     }
     
     public TNode(E newData) {
         this.data = newData;
         this.children = null;
+        this.parent = null;
     }
     
     public E getData() {

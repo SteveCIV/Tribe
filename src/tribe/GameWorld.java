@@ -55,11 +55,26 @@ public class GameWorld {
     
     // creates a new civilization of given nation size and member size and adds to civilization list
     public void addCiv(int popNat, int popMem, int year) {
+        // sets gw as parent of gw
         Civilization c = new Civilization();
-        society.setBase(new TNode(c));
+        TNode cNode = new TNode();
+        cNode.setData(c);
+        society.setBase(new TNode(gw));
+        cNode.setParent(society.getBase());
+        
+        // for given nation size
         for(int i = 0; i < popNat; i++) {
+            
+            // sets civilization as parent of nation
             Nation n = new Nation();
+            TNode nNode = new TNode();
+            nNode.setData(n);
+            nNode.setParent(cNode);
+            
+            // for given member size
             for(int j = 0; j < popMem; j++) {
+                
+                // gets random coordinate
                 Random r1 = new Random();
                 int rX = r1.nextInt(Tribe.WIDTH);
                 Random r2 = new Random();
@@ -69,6 +84,11 @@ public class GameWorld {
                 // create collider
                 Member m = new Member(rC, year);
                 Tile collider = new Tile(m);
+                
+                // set nation as parent of member
+                TNode mNode = new TNode();
+                mNode.setData(m);
+                mNode.setParent(nNode);
 
                 // find tile
                 Acre aMove = land.getAcre(rX, rY);
@@ -85,10 +105,18 @@ public class GameWorld {
                 } else {
                     n.addMember(rC, year);
                 }
+                System.out.println("Base: " + society.getBase().getData() + " Civ Children: " + cNode.getData() + " Nat Children: " + nNode.getData() + " Mem Children: " + mNode.getData());
+                nNode.setChildren(n.getMemberList());
             }
+            
+            // sets nation MemberList as child of civilization
+            cNode.setChildren(c.getNationList());
             c.addNation(n);
         }
+        
+        // sets civilization NationList as child of society
         civs.add(c);
+        society.getBase().setChildren(civs);
     }
     
     public void addTile(Coordinate c) {
