@@ -31,13 +31,11 @@ public class Nation {
     
     // moves every member of tribe to valid location
     // inefficient method! copies an entire map and barely uses it
-    public void randMoveAllMember(Map land) {
+    public void randMoveAllMember(Map land, ArrayList<Coordinate> occTiles, Tree society) {
         for(Member m : members) {
             
-            // collider member cords
-            Coordinate mCord = new Coordinate(m.getCords().getX(), m.getCords().getY());
-            
             // collider acre
+            Coordinate mCord = new Coordinate(m.getCords().getX(), m.getCords().getY());
             Acre a = land.getAcre(mCord.getX(), mCord.getY());
             
             // collider
@@ -73,9 +71,12 @@ public class Nation {
             Member testMove = null;
             for(Coordinate c : occTiles) {
                 if(mMove.getCords().getX() == c.getX() && mMove.getCords().getY() == c.getY()) {
-                    //testMove = GameWorld.findMember(c, civ);
+                    
+                } else {
+                    testMove = null;
                 }
             }
+            
             Tile collidee = new Tile(testMove, aMove);
             
             // moves member if movement is valid
@@ -124,7 +125,7 @@ public class Nation {
     // unsafe method! does not check if square is a valid place for member to exist
     public void addMember(Coordinate c, int yearBorn) {
         Member newMember = new Member(c, yearBorn);
-        addTile(c);
+        addOccTile(c);
         members.add(newMember);
     }
     
@@ -137,7 +138,8 @@ public class Nation {
         return occTiles;
     }
     
-    public void addTile(Coordinate c) {
+    public void addOccTile(Coordinate c) {
         occTiles.add(c);
+        
     }
 }

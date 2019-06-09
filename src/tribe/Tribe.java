@@ -214,7 +214,6 @@ public class Tribe extends Application {
     // starts new game with given parameters
     public void startNewGame(Stage window, int popCiv, int popNat, int popMem, int worldAge) {
         for(int i = 0; i < popCiv; i++) {
-            System.out.println("Civ count " + popCiv + " Nat count " + popNat + " Mem count" + popMem);
             gw.addCiv(popNat, popMem, worldAge);
         }
         window.setScene(currentGame);

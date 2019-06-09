@@ -11,9 +11,9 @@ import static tribe.Tribe.gw;
  */
 public class GameWorld {
     private final Map land;
-    private ArrayList<Civilization> civs;
-    private ArrayList<Coordinate> occTiles;
-    private Tree society;
+    private final ArrayList<Civilization> civs;
+    private final ArrayList<Coordinate> occTiles;
+    private final Tree society;
     private int worldAge;
     
     public GameWorld() throws FileNotFoundException {
@@ -27,7 +27,7 @@ public class GameWorld {
     // moves civilizatoin, setWorldOlder
     public void generateNewYear() {
         for(Civilization c : civs) {
-            c.randMoveAllNation(land);
+            c.randMoveAllNation(land, occTiles, society);
         }
         setWorldOlder();
     }
@@ -105,7 +105,6 @@ public class GameWorld {
                 } else {
                     n.addMember(rC, year);
                 }
-                System.out.println("Base: " + society.getBase().getData() + " Civ Children: " + cNode.getData() + " Nat Children: " + nNode.getData() + " Mem Children: " + mNode.getData());
                 nNode.setChildren(n.getMemberList());
             }
             
@@ -119,8 +118,11 @@ public class GameWorld {
         society.getBase().setChildren(civs);
     }
     
-    public void addTile(Coordinate c) {
+    public void addOccTile(Coordinate c) {
+        String output = "";
         occTiles.add(c);
+        output += "(" + c.getX() + ", " + c.getY() + ")";
+        System.out.println("test " + output);
     }
     
     // worldAge++

@@ -25,9 +25,9 @@ public class Civilization {
     }
     
     // moves all nations
-    public void randMoveAllNation(Map land) {
+    public void randMoveAllNation(Map land, ArrayList<Coordinate> occTiles, Tree society) {
         for(Nation n : nations) {
-            n.randMoveAllMember(land);
+            n.randMoveAllMember(land, occTiles, society);
         }
     }
     
@@ -106,7 +106,7 @@ public class Civilization {
     }
     
     // adds cords to occupied tile list
-    public void addTile(Coordinate c) {
+    public void addOccTile(Coordinate c) {
         occTiles.add(c);
     }
 }
