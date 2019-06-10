@@ -16,7 +16,7 @@ public class GameWorld {
     private final Tree society;
     private int worldAge;
     
-    public GameWorld() throws FileNotFoundException {
+    public GameWorld() {
         land = new Map();
         civs = new ArrayList();
         occTiles = new ArrayList();
@@ -56,7 +56,7 @@ public class GameWorld {
     // creates a new civilization of given nation size and member size and adds to civilization list
     public void addCiv(int popNat, int popMem, int year) {
         // sets gw as parent of gw
-        Civilization c = new Civilization();
+        Civilization c = new Civilization(this);
         TNode cNode = new TNode();
         cNode.setData(c);
         society.setBase(new TNode(gw));
@@ -66,7 +66,7 @@ public class GameWorld {
         for(int i = 0; i < popNat; i++) {
             
             // sets civilization as parent of nation
-            Nation n = new Nation();
+            Nation n = new Nation(c);
             TNode nNode = new TNode();
             nNode.setData(n);
             nNode.setParent(cNode);
@@ -82,19 +82,20 @@ public class GameWorld {
                 Coordinate rC = new Coordinate(rX, rY);
 
                 // create collider
-                Member m = new Member(rC, year);
+                Member m = new Member(rC, year, n);
                 Tile collider = new Tile(m);
                 
                 // set nation as parent of member
                 TNode mNode = new TNode();
                 mNode.setData(m);
                 mNode.setParent(nNode);
+                m.setParent(n);
 
                 // find tile
                 Acre aMove = land.getAcre(rX, rY);
 
                 // find member, test if occupied by any member in any civs
-                Member mMove = new Member(rC);
+                Member mMove = new Member(rC, n);
                 Member testMove = Civilization.findMember(mMove.getCords(), c.getNationList());
 
                 // create collidee
@@ -106,11 +107,13 @@ public class GameWorld {
                     n.addMember(rC, year);
                 }
                 nNode.setChildren(n.getMemberList());
+                n.setParent(c);
             }
-            
+                        
             // sets nation MemberList as child of civilization
-            cNode.setChildren(c.getNationList());
             c.addNation(n);
+            cNode.setChildren(c.getNationList());
+            c.setParent(gw);
         }
         
         // sets civilization NationList as child of society
@@ -118,11 +121,12 @@ public class GameWorld {
         society.getBase().setChildren(civs);
     }
     
-    public void addOccTile(Coordinate c) {
-        String output = "";
-        occTiles.add(c);
-        output += "(" + c.getX() + ", " + c.getY() + ")";
-        System.out.println("test " + output);
+    public void addOccTiles(Coordinate cord) {
+        occTiles.add(cord);
+    }
+    
+    public ArrayList<Coordinate> getOccTiles() {
+        return occTiles;
     }
     
     // worldAge++

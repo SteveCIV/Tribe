@@ -11,22 +11,26 @@ import javafx.scene.paint.Color;
 public class Nation {
     private ArrayList<Member> members;
     private ArrayList<Coordinate> occTiles;
+    private Civilization parent;
     Random r = new Random();
     public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
-    Nation() {
+    Nation(Civilization parent) {
         this.members = new ArrayList();
         this.occTiles = new ArrayList();
+        this.parent = parent;
     }
     
-    Nation(int pop, int year) {
+    Nation(int pop, int year, Civilization parent) {
         this.members = new ArrayList();
         this.occTiles = new ArrayList();
+        this.parent = parent;
     }
     
-    Nation(ArrayList<Member> m) {
+    Nation(ArrayList<Member> m, Civilization parent) {
         this.members = m;
         this.occTiles = new ArrayList();
+        this.parent = parent;
     }
     
     // moves every member of tribe to valid location
@@ -43,7 +47,7 @@ public class Nation {
             
             // finds part of collidee
             Acre aMove = land.getAcre(mCord.getX(), mCord.getY());
-            Member mMove = new Member(mCord, m.getBorn());
+            Member mMove = new Member(mCord, m.getBorn(), this);
             Random r = new Random();
             int rr = r.nextInt(5);
             switch (rr) {
@@ -69,7 +73,7 @@ public class Nation {
             
             // collidee
             Member testMove = null;
-            for(Coordinate c : occTiles) {
+            for(Coordinate c : occTiles) { // occTiles always empty
                 if(mMove.getCords().getX() == c.getX() && mMove.getCords().getY() == c.getY()) {
                     
                 } else {
@@ -124,7 +128,7 @@ public class Nation {
     // adds member a given (x, y) and birth year 
     // unsafe method! does not check if square is a valid place for member to exist
     public void addMember(Coordinate c, int yearBorn) {
-        Member newMember = new Member(c, yearBorn);
+        Member newMember = new Member(c, yearBorn, this);
         addOccTile(c);
         members.add(newMember);
     }
@@ -138,8 +142,18 @@ public class Nation {
         return occTiles;
     }
     
-    public void addOccTile(Coordinate c) {
-        occTiles.add(c);
-        
+    public void addOccTile(Coordinate cord) {
+        occTiles.add(cord);
+        parent.addOccTile(cord);
+    }
+    
+    // sets parent
+    public void setParent(Civilization civ) {
+        parent = civ;
+    }
+
+    // gets parent
+    public Civilization getParent() {
+        return parent;
     }
 }

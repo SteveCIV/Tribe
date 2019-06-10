@@ -10,17 +10,20 @@ import java.util.Random;
 public class Civilization {
     private ArrayList<Nation> nations;
     private ArrayList<Coordinate> occTiles;
+    private GameWorld parent;
     private int popCiv;
     
-    public Civilization() {
+    public Civilization(GameWorld gw) {
         this.nations = new ArrayList();
         this.occTiles = new ArrayList();
+        this.parent = gw;
         this.popCiv = 0;
     }
     
-    public Civilization(int popNation, int popMember) {
+    public Civilization(int popNation, int popMember, GameWorld gw) {
         this.nations = new ArrayList();
         this.occTiles = new ArrayList();
+        this.parent = gw;
         this.popCiv = 0;
     }
     
@@ -55,7 +58,7 @@ public class Civilization {
     // creates a new nation of given size and adds to nation list
     // untested!
     public void addNation(int pop, int year, Map land) {
-        Nation n = new Nation();
+        Nation n = new Nation(this);
         for (int i = 0; i < pop; i++) {
             Random r1 = new Random();
             int rX = r1.nextInt(Tribe.WIDTH);
@@ -64,14 +67,14 @@ public class Civilization {
             Coordinate rC = new Coordinate(rX, rY);
 
             // create collider
-            Member m = new Member(rC, year);
+            Member m = new Member(rC, year, n);
             Tile collider = new Tile(m);
 
             // find tile
             Acre aMove = land.getAcre(rX, rY);
 
             // find member, test if occupied 
-            Member mMove = new Member(rC);
+            Member mMove = new Member(rC, n);
             Member testMove = Nation.findMember(mMove.getCords(), n.getMemberList());
 
             // create collidee
@@ -106,7 +109,18 @@ public class Civilization {
     }
     
     // adds cords to occupied tile list
-    public void addOccTile(Coordinate c) {
-        occTiles.add(c);
+    public void addOccTile(Coordinate cord) {
+        occTiles.add(cord);
+        parent.addOccTiles(cord);
+
+    }
+    
+    // sets parent
+    public void setParent(GameWorld gw) {
+        parent = gw;
+    }
+    // gets parent
+    public GameWorld getParent() {
+        return parent;
     }
 }
