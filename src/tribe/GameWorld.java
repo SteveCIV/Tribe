@@ -63,7 +63,7 @@ public class GameWorld {
                 // create collidee
                 Tile collidee = new Tile(testMove, aMove);
                 TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
-                if (!canCollide.memberToTileCollide()) {
+                if(!canCollide.memberToTileCollide()) {
                     j--;
                 } else {
                     n.memberBorn(rC, year);

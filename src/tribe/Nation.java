@@ -68,15 +68,16 @@ public class Nation {
             
             // collidee
             Member testMove = findMember(aMove.getCords());
-            
             Tile collidee = new Tile(testMove, aMove);
             
             // moves member if movement is valid
             TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
             boolean validMove = canCollide.memberToTileCollide();
             if(validMove) {
-                a.changeFood(-0.1);
+                aMove.changeFood(-0.1);
                 m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
+            } else {
+                a.changeFood(-0.1);
             }
         }
     }
