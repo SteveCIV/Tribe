@@ -30,6 +30,10 @@ public class Member {
         this.stregth = 0.0;
         this.born = yearBorn;
     }
+    
+    public void memberDeath() {
+        parent.memberKilled(cord);
+    }
 
     // moves member in a cardinal direction
     public void moveNorth() {

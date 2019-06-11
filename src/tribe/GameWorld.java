@@ -65,7 +65,7 @@ public class GameWorld {
                 if (!canCollide.memberToTileCollide()) {
                     j--;
                 } else {
-                    n.addMember(rC, year);
+                    n.memberBorn(rC, year);
                 }
             }
             c.addNation(n);

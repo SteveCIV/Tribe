@@ -32,6 +32,7 @@ public class Nation {
     // moves every member of tribe to valid location
     // inefficient method! copies an entire map and barely uses it
     public void randMoveAllMember(Map land) {
+        ArrayList<Member> members = (ArrayList<Member>)this.members.clone();
         for(Member m : members) {
             
             // collider acre
@@ -90,9 +91,16 @@ public class Nation {
         return parent.findMember(c);
     }
     
+    // adds member a given (x, y) and birth year 
+    // unsafe method! does not check if square is a valid place for member to exist
+    public void memberBorn(Coordinate c, int yearBorn) {
+        Member newMember = new Member(c, yearBorn, this);
+        members.add(newMember);
+    }
+    
     // attempts to delete member given cords
     // untested!
-    public void deleteMember(Coordinate c) {
+    public void memberKilled(Coordinate c) {
         for(Member m : members) {
             if(m.getCords().getX() == c.getX() && m.getCords().getY() == c.getY()) {
                 members.remove(m);
@@ -116,16 +124,17 @@ public class Nation {
     public Civilization getParent() {
         return parent;
     }
-
-    // adds member a given (x, y) and birth year 
-    // unsafe method! does not check if square is a valid place for member to exist
-    public void addMember(Coordinate c, int yearBorn) {
-        Member newMember = new Member(c, yearBorn, this);
-        members.add(newMember);
-    }
     
     // returns popNation
     public int getNationPop() {
         return members.size();
+    }
+    
+    public static String toStringMemberList(ArrayList<Member> mList) {
+        String output = "";
+        for(Member m : mList) {
+            output += "(" + m.getCords().getX() + ", " + m.getCords().getY() + ")";
+        }
+        return output;
     }
 }

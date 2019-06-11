@@ -76,7 +76,7 @@ public class Civilization {
             if (!canCollide.memberToTileCollide()) {
                 i--;
             } else {
-                n.addMember(rC, year);
+                n.memberBorn(rC, year);
             }
         }
         nations.add(n);
