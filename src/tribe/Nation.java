@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  */
 public class Nation {
     private ArrayList<Member> members;
-    private Civilization parent;
+    private final Civilization parent;
     private static final Random r = new Random();
     public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
@@ -111,6 +111,11 @@ public class Nation {
     public ArrayList<Member> getMemberList() {
         return members;
     }
+    
+    // gets parent
+    public Civilization getParent() {
+        return parent;
+    }
 
     // adds member a given (x, y) and birth year 
     // unsafe method! does not check if square is a valid place for member to exist
@@ -122,15 +127,5 @@ public class Nation {
     // returns popNation
     public int getNationPop() {
         return members.size();
-    }
-    
-    // sets parent
-    public void setParent(Civilization civ) {
-        parent = civ;
-    }
-
-    // gets parent
-    public Civilization getParent() {
-        return parent;
     }
 }

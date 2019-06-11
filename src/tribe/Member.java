@@ -6,20 +6,20 @@ package tribe;
  */
 public class Member {
     private Coordinate cord;
-    private Nation parent;
+    private final Nation parent;
     private double stregth;
     private final int born;
     
-    Member(Nation n) {
+    Member(Nation parent) {
         this.cord = new Coordinate(-1, -1);
-        this.parent = n;
+        this.parent = parent;
         this.stregth = 0.0;
         this.born = -1;
     }
     
-    Member(Coordinate c, Nation n) {
+    Member(Coordinate c, Nation parent) {
         this.cord = new Coordinate(c.getX(), c.getY());
-        this.parent = n;
+        this.parent = parent;
         this.stregth = 0.0;
         this.born = -1;
     }
@@ -46,14 +46,24 @@ public class Member {
     }
     
     // SETTERS && GETTERS
-    // sets location
+    // sets location from (x, y)
     public void setCords(int x, int y) {
         this.cord = new Coordinate(x, y);
     }
     
-    // returns location
+    // sets location from Coordinate
+    public void setCords(Coordinate c) {
+        this.cord = c;
+    }
+    
+    // returns cord
     public Coordinate getCords() {
         return cord;
+    }
+    
+    // gets parent
+    public Nation getParent() {
+        return parent;
     }
     
     // sets stregth as random 0.0 to 1.0
@@ -80,15 +90,5 @@ public class Member {
     // returns born
     public int getBorn() {
         return born;
-    }
-    
-    // sets parent
-    public void setParent(Nation nat) {
-        parent = nat;
-    }
-
-    // gets parent
-    public Nation getParent() {
-        return parent;
     }
 }

@@ -29,10 +29,6 @@ public class Tile {
     }
     
     // GETTERS && SETTERS
-    public boolean getHasMember() {
-        return (m != null);
-    }
-    
     public void setMember(Member member) {
         m = member;
     }
@@ -41,8 +37,8 @@ public class Tile {
         return m;
     }
     
-    public boolean getHasAcre() {
-        return (a != null);
+    public boolean getHasMember() {
+        return (m != null);
     }
     
     public void setAcre(Acre acre) {
@@ -51,5 +47,9 @@ public class Tile {
     
     public Acre getAcre() {
         return a;
+    }
+    
+    public boolean getHasAcre() {
+        return (a != null);
     }
 }

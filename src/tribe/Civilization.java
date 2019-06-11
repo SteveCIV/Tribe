@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class Civilization {
     private ArrayList<Nation> nations;
-    private GameWorld parent;
+    private final GameWorld parent;
     private int popCiv;
     
     public Civilization(GameWorld gw) {
@@ -18,9 +18,15 @@ public class Civilization {
         this.popCiv = 0;
     }
     
-    public Civilization(int popNation, int popMember, GameWorld gw) {
+    public Civilization(int popNation, int popMember, GameWorld parent) {
         this.nations = new ArrayList();
-        this.parent = gw;
+        this.parent = parent;
+        this.popCiv = 0;
+    }
+    
+    public Civilization(ArrayList<Nation> nats, GameWorld parent) {
+        this.nations = nats;
+        this.parent = parent;
         this.popCiv = 0;
     }
     
@@ -42,18 +48,7 @@ public class Civilization {
         return parent.findMember(c);
     }
     
-    // SETTERS && GETTERS && ADDERS
-    // set nation list
-    public void setNationList(ArrayList<Nation> nations) {
-        this.nations = nations;
-    }
-    
-    // returns nation list
-    public ArrayList<Nation> getNationList() {
-        return nations;
-    }
-    
-    // creates a new nation of given size and adds to nation list
+    // creates a new nation of given member size and adds to nation list
     // untested!
     public void addNation(int pop, int year, Map land) {
         Nation n = new Nation(this);
@@ -85,29 +80,34 @@ public class Civilization {
             }
         }
         nations.add(n);
-    } 
-    
-    // adds new nation and adds to nation list
+    }
+
+    // adds new nation and adds to nations
     public void addNation(Nation newNation) {
         nations.add(newNation);
     }
     
-    // returns popCiv
-    public int getPopCiv() {
-        int tempPop = 0;
-        for(Nation n : nations) {
-            tempPop += n.getNationPop();
-        }
-        popCiv = tempPop;
-        return popCiv;
+    // SETTERS && GETTERS && ADDERS
+    // set nation list
+    public void setNationList(ArrayList<Nation> nations) {
+        this.nations = nations;
     }
     
-    // sets parent
-    public void setParent(GameWorld gw) {
-        parent = gw;
+    // returns nation list
+    public ArrayList<Nation> getNationList() {
+        return nations;
     }
+    
     // gets parent
     public GameWorld getParent() {
         return parent;
+    }
+    
+    // returns popCiv
+    public int getPopCiv() {
+        for (Nation n : nations) {
+            popCiv += n.getNationPop();
+        }
+        return popCiv;
     }
 }

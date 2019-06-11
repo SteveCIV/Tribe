@@ -45,7 +45,7 @@ public class Tribe extends Application {
         Label label1 = new Label("Welcome to Tribe");
         Button buttonNewGame = new Button();
         buttonNewGame.setText("New game");
-        buttonNewGame.setOnAction(e -> window.setScene(menuNewGame)); // TODO: will go to new game menu
+        buttonNewGame.setOnAction(e -> window.setScene(menuNewGame));
         Button buttonSavedGame = new Button();
         buttonSavedGame.setText("Saved Games");
         buttonSavedGame.setOnAction(e -> window.setScene(currentGame)); // TODO: will go to saved games menu
@@ -88,15 +88,8 @@ public class Tribe extends Application {
             public void handle(MouseEvent e) {
                 int xCord = (int)e.getX() / 5;
                 int yCord = (int)e.getY() / 5;
-                
-                // finds member
                 Coordinate cord = new Coordinate(xCord, yCord);
-                Member m = gw.findMember(cord);
-                
-                // fins acre
-                Acre a = gw.getLand().getAcre(xCord, yCord);
-                Tile tile = new Tile(m, a);
-                showTileStats(tile);
+                showTileStats(cord);
             }
         });
         gc = canvas.getGraphicsContext2D();
@@ -125,7 +118,7 @@ public class Tribe extends Application {
         Label label5 = new Label("Number of Members per nation");
         Slider sliderMem = new Slider(0, 40, 1);
         sliderMem.setShowTickLabels(true);
-        sliderMem.setMajorTickUnit(1);
+        sliderMem.setMajorTickUnit(4);
         sliderMem.setBlockIncrement(1);
         Button buttonStart = new Button();
         buttonStart.setText("Start Game");
@@ -203,7 +196,7 @@ public class Tribe extends Application {
         }
     }
     
-    // starts new game with given parameters
+    // starts new game with given parameters (lies, actually adds members to current game)
     public void startNewGame(Stage window, int popCiv, int popNat, int popMem, int worldAge) {
         for(int i = 0; i < popCiv; i++) {
             gw.addCiv(popNat, popMem, worldAge);
@@ -228,17 +221,18 @@ public class Tribe extends Application {
     }
     
     // opens TileStats window
-    public void showTileStats(Tile t) {
+    public void showTileStats(Coordinate c) {
+        Member m = gw.findMember(c);
+        Acre a = gw.getLand().getAcre(c.getX(), c.getY());
+        Tile t = new Tile(m, a);
         TileStatsPopup.display("Tile Statistics", t);
     }
     
-    // moves all members of all nations and redraws canvas
+    // moves all members and redraws canvas n times
     public void newYear() {
         gw.generateNewYear();
         drawGameWorld(gc);
     }
-    
-    // n years pass given n
     public void newYear(int n) {
         for(int i = 0; i < n; i++) {
             newYear();
