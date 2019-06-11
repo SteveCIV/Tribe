@@ -12,7 +12,7 @@ public class Nation {
     private ArrayList<Member> members;
     private ArrayList<Coordinate> occTiles;
     private Civilization parent;
-    Random r = new Random();
+    private static final Random r = new Random();
     public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
     Nation(Civilization parent) {
@@ -35,7 +35,7 @@ public class Nation {
     
     // moves every member of tribe to valid location
     // inefficient method! copies an entire map and barely uses it
-    public void randMoveAllMember(Map land, ArrayList<Coordinate> occTiles, Tree society) {
+    public void randMoveAllMember(Map land) {
         for(Member m : members) {
             
             // collider acre
@@ -48,9 +48,7 @@ public class Nation {
             // finds part of collidee
             Acre aMove = land.getAcre(mCord.getX(), mCord.getY());
             Member mMove = new Member(mCord, m.getBorn(), this);
-            Random r = new Random();
-            int rr = r.nextInt(5);
-            switch (rr) {
+            switch (r.nextInt(5)) {
                 case 0:
                     mMove.moveNorth();
                     aMove = land.getAcre(mCord.getX(), mCord.getY() - 1);
@@ -72,14 +70,7 @@ public class Nation {
             }
             
             // collidee
-            Member testMove = null;
-            for(Coordinate c : occTiles) { // occTiles always empty
-                if(mMove.getCords().getX() == c.getX() && mMove.getCords().getY() == c.getY()) {
-                    
-                } else {
-                    testMove = null;
-                }
-            }
+            Member testMove = findMember(aMove.getCords());
             
             Tile collidee = new Tile(testMove, aMove);
             
@@ -94,13 +85,13 @@ public class Nation {
     }
     
     // attempts to find member given cords
-    public static Member findMember(Coordinate c, ArrayList<Member> n) {
-        for(Member m : n) {
+    public Member findMember(Coordinate c) {
+        for(Member m : members) {
             if(m.getCords().getX() == c.getX() && m.getCords().getY() == c.getY()) {
                 return m;
             }
         }
-        return null;
+        return parent.findMember(c);
     }
     
     // attempts to delete member given cords

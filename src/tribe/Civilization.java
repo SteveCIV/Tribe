@@ -28,20 +28,21 @@ public class Civilization {
     }
     
     // moves all nations
-    public void randMoveAllNation(Map land, ArrayList<Coordinate> occTiles, Tree society) {
+    public void randMoveAllNation(Map land) {
         for(Nation n : nations) {
-            n.randMoveAllMember(land, occTiles, society);
+            n.randMoveAllMember(land);
         }
     }
     
-    public static Member findMember(Coordinate c, ArrayList<Nation> nations) {
+    public Member findMember(Coordinate c) {
         for(Nation n : nations) {
-            Member m = n.findMember(c, n.getMemberList());
-            if(m != null) {
-                return m;
+            for(Member m : n.getMemberList()) {
+                if(m.getCords().getX() == c.getX() && m.getCords().getY() == c.getY()) {
+                    return m;
+                }
             }
         }
-        return null;
+        return parent.findMember(c);
     }
     
     // SETTERS && GETTERS && ADDERS
@@ -75,7 +76,7 @@ public class Civilization {
 
             // find member, test if occupied 
             Member mMove = new Member(rC, n);
-            Member testMove = Nation.findMember(mMove.getCords(), n.getMemberList());
+            Member testMove = findMember(mMove.getCords());
 
             // create collidee
             Tile collidee = new Tile(testMove, aMove);

@@ -27,9 +27,22 @@ public class GameWorld {
     // moves civilizatoin, setWorldOlder
     public void generateNewYear() {
         for(Civilization c : civs) {
-            c.randMoveAllNation(land, occTiles, society);
+            c.randMoveAllNation(land);
         }
         setWorldOlder();
+    }
+    
+    public Member findMember(Coordinate cord) {
+        for(Civilization c : civs) {
+            for(Nation n : c.getNationList()) {
+                for(Member m : n.getMemberList()) {
+                    if(m.getCords().getX() == cord.getX() && m.getCords().getY() == cord.getY()) {
+                        return m;
+                    }
+                }
+            }
+        }
+        return null;
     }
     
     // GETTERS && SETTERS
@@ -96,7 +109,7 @@ public class GameWorld {
 
                 // find member, test if occupied by any member in any civs
                 Member mMove = new Member(rC, n);
-                Member testMove = Civilization.findMember(mMove.getCords(), c.getNationList());
+                Member testMove = findMember(mMove.getCords());
 
                 // create collidee
                 Tile collidee = new Tile(testMove, aMove);
