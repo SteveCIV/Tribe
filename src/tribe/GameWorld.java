@@ -27,6 +27,7 @@ public class GameWorld {
         for(Civilization c : civs) {
             c.randMoveAllNation(land);
         }
+        land.terrainRegrowth();
         setWorldOlder();
     }
     

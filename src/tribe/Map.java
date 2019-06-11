@@ -1,14 +1,25 @@
 package tribe;
 
+import java.util.Random;
+
 /**
  *
  * @author conor
  */
 public class Map {
     private Acre[][] map = new Acre[Tribe.WIDTH][Tribe.HEIGHT];
+    private double regrowRate = 0.25; // TODO: will be limited from 0.0 to 1.0
+    private double regrowValue = 0.1;
+    private static final Random r = new Random();
     
     public Map() {
         fillMap();
+    }
+    
+    public Map(double regrowR, double regrowV) {
+        fillMap();
+        this.regrowRate = regrowR;
+        this.regrowValue = regrowV;
     }
     
     // fills map from char[][]
@@ -32,6 +43,20 @@ public class Map {
                         a.setFood(0.0);
                 }
                 setAcre(a, i, j);
+            }
+        }
+    }
+    
+    public void terrainRegrowth() {
+        for(int i = 0; i < map.length; i++) {
+            for(int j = 0; j < map[0].length; j++) {
+                if(map[i][j].getPassable()) {
+                    if(map[i][j].getFood() < 1.0) {
+                        if(r.nextDouble() <= regrowRate) {
+                            map[i][j].changeFood(regrowValue);
+                        }
+                    }
+                }
             }
         }
     }
