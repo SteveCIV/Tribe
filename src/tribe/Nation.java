@@ -10,26 +10,22 @@ import javafx.scene.paint.Color;
  */
 public class Nation {
     private ArrayList<Member> members;
-    private ArrayList<Coordinate> occTiles;
     private Civilization parent;
     private static final Random r = new Random();
     public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
     Nation(Civilization parent) {
         this.members = new ArrayList();
-        this.occTiles = new ArrayList();
         this.parent = parent;
     }
     
     Nation(int pop, int year, Civilization parent) {
         this.members = new ArrayList();
-        this.occTiles = new ArrayList();
         this.parent = parent;
     }
     
     Nation(ArrayList<Member> m, Civilization parent) {
         this.members = m;
-        this.occTiles = new ArrayList();
         this.parent = parent;
     }
     
@@ -120,22 +116,12 @@ public class Nation {
     // unsafe method! does not check if square is a valid place for member to exist
     public void addMember(Coordinate c, int yearBorn) {
         Member newMember = new Member(c, yearBorn, this);
-        addOccTile(c);
         members.add(newMember);
     }
     
     // returns popNation
     public int getNationPop() {
         return members.size();
-    }
-    
-    public ArrayList<Coordinate> getOccTiles() {
-        return occTiles;
-    }
-    
-    public void addOccTile(Coordinate cord) {
-        occTiles.add(cord);
-        parent.addOccTile(cord);
     }
     
     // sets parent

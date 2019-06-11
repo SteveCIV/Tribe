@@ -9,20 +9,17 @@ import java.util.Random;
  */
 public class Civilization {
     private ArrayList<Nation> nations;
-    private ArrayList<Coordinate> occTiles;
     private GameWorld parent;
     private int popCiv;
     
     public Civilization(GameWorld gw) {
         this.nations = new ArrayList();
-        this.occTiles = new ArrayList();
         this.parent = gw;
         this.popCiv = 0;
     }
     
     public Civilization(int popNation, int popMember, GameWorld gw) {
         this.nations = new ArrayList();
-        this.occTiles = new ArrayList();
         this.parent = gw;
         this.popCiv = 0;
     }
@@ -103,17 +100,6 @@ public class Civilization {
         }
         popCiv = tempPop;
         return popCiv;
-    }
-    
-    public ArrayList<Coordinate> getOccTiles() {
-        return occTiles;
-    }
-    
-    // adds cords to occupied tile list
-    public void addOccTile(Coordinate cord) {
-        occTiles.add(cord);
-        parent.addOccTiles(cord);
-
     }
     
     // sets parent

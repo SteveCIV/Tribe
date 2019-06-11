@@ -12,15 +12,11 @@ import static tribe.Tribe.gw;
 public class GameWorld {
     private final Map land;
     private final ArrayList<Civilization> civs;
-    private final ArrayList<Coordinate> occTiles;
-    private final Tree society;
     private int worldAge;
     
     public GameWorld() {
         land = new Map();
         civs = new ArrayList();
-        occTiles = new ArrayList();
-        society = new Tree();
         worldAge = 0;
     }
     
@@ -70,19 +66,12 @@ public class GameWorld {
     public void addCiv(int popNat, int popMem, int year) {
         // sets gw as parent of gw
         Civilization c = new Civilization(this);
-        TNode cNode = new TNode();
-        cNode.setData(c);
-        society.setBase(new TNode(gw));
-        cNode.setParent(society.getBase());
         
         // for given nation size
         for(int i = 0; i < popNat; i++) {
             
             // sets civilization as parent of nation
             Nation n = new Nation(c);
-            TNode nNode = new TNode();
-            nNode.setData(n);
-            nNode.setParent(cNode);
             
             // for given member size
             for(int j = 0; j < popMem; j++) {
@@ -97,12 +86,6 @@ public class GameWorld {
                 // create collider
                 Member m = new Member(rC, year, n);
                 Tile collider = new Tile(m);
-                
-                // set nation as parent of member
-                TNode mNode = new TNode();
-                mNode.setData(m);
-                mNode.setParent(nNode);
-                m.setParent(n);
 
                 // find tile
                 Acre aMove = land.getAcre(rX, rY);
@@ -119,27 +102,16 @@ public class GameWorld {
                 } else {
                     n.addMember(rC, year);
                 }
-                nNode.setChildren(n.getMemberList());
                 n.setParent(c);
             }
                         
             // sets nation MemberList as child of civilization
             c.addNation(n);
-            cNode.setChildren(c.getNationList());
             c.setParent(gw);
         }
         
         // sets civilization NationList as child of society
         civs.add(c);
-        society.getBase().setChildren(civs);
-    }
-    
-    public void addOccTiles(Coordinate cord) {
-        occTiles.add(cord);
-    }
-    
-    public ArrayList<Coordinate> getOccTiles() {
-        return occTiles;
     }
     
     // worldAge++
