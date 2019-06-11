@@ -32,6 +32,7 @@ public class Civilization {
     
     // moves all nations
     public void randMoveAllNation(Map land) {
+        ArrayList<Nation> nations = (ArrayList<Nation>)this.nations.clone();
         for(Nation n : nations) {
             n.randMoveAllMember(land);
         }
@@ -85,6 +86,14 @@ public class Civilization {
     // adds new nation and adds to nations
     public void addNation(Nation newNation) {
         nations.add(newNation);
+    }
+    
+    // removes given nation from nations
+    public void removeNation(Nation n) {
+        nations.remove(n);
+        if(nations.isEmpty()) {
+            parent.removeCiv(this);
+        }
     }
     
     // SETTERS && GETTERS && ADDERS

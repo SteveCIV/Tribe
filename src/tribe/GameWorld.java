@@ -23,6 +23,7 @@ public class GameWorld {
     
     // moves all members in gw and worldAge++
     public void generateNewYear() {
+        ArrayList<Civilization> civs = (ArrayList<Civilization>)this.civs.clone();
         for(Civilization c : civs) {
             c.randMoveAllNation(land);
         }
@@ -76,6 +77,12 @@ public class GameWorld {
     // adds new civilization to civs
     public void addCiv(Civilization c) {
         civs.add(c);
+    }
+    
+    // removes civ from civs
+    public void removeCiv(Civilization c) {
+        civs.remove(c);
+        System.out.println();
     }
     
     public Member findMember(Coordinate cord) {

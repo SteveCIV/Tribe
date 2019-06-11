@@ -99,11 +99,13 @@ public class Nation {
     }
     
     // attempts to delete member given cords
-    // untested!
     public void memberKilled(Coordinate c) {
         for(Member m : members) {
             if(m.getCords().getX() == c.getX() && m.getCords().getY() == c.getY()) {
                 members.remove(m);
+                if(members.isEmpty()) {
+                    parent.removeNation(this);
+                }
                 break;
             }
         }
