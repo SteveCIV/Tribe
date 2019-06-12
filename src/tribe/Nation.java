@@ -74,10 +74,23 @@ public class Nation {
             TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
             boolean validMove = canCollide.memberToTileCollide();
             if(validMove) {
-                aMove.changeFood(-0.1);
-                m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
+                if(aMove.getFood() > 0) {
+                    m.changeSatiation(0.1);
+                    aMove.changeFood(-0.1);
+                    m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
+                } else {
+                    m.changeSatiation(-0.1);
+                }
             } else {
-                a.changeFood(-0.1);
+                if(a.getFood() > 0) {
+                    m.changeSatiation(0.1);
+                    a.changeFood(-0.1);
+                } else {
+                    m.changeSatiation(-0.1);
+                }
+            }
+            if(m.getSatiation() < 0) {
+                m.memberDeath();
             }
         }
     }

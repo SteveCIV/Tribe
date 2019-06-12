@@ -7,27 +7,27 @@ package tribe;
 public class Member {
     private Coordinate cord;
     private final Nation parent;
-    private double stregth;
+    private double satiation;
     private final int born;
     
     Member(Nation parent) {
         this.cord = new Coordinate(-1, -1);
         this.parent = parent;
-        this.stregth = 0.0;
+        this.satiation = 0.0;
         this.born = -1;
     }
     
     Member(Coordinate c, Nation parent) {
         this.cord = new Coordinate(c.getX(), c.getY());
         this.parent = parent;
-        this.stregth = 0.0;
+        this.satiation = 0.0;
         this.born = -1;
     }
     
     Member(Coordinate c, int yearBorn, Nation parent) {
         this.cord = new Coordinate(c.getX(), c.getY());
         this.parent = parent;
-        this.stregth = 0.0;
+        this.satiation = 0.0;
         this.born = yearBorn;
     }
     
@@ -47,6 +47,10 @@ public class Member {
     }
     public void moveWest() {
         cord.setX(cord.getX() - 1);
+    }
+    
+    public void changeSatiation(double satiation) {
+        this.satiation += satiation;
     }
     
     // SETTERS && GETTERS
@@ -69,20 +73,15 @@ public class Member {
     public Nation getParent() {
         return parent;
     }
-    
-    // sets stregth as random 0.0 to 1.0
-    public double setRandomStregth() {
-        return Math.random();
+
+    // sets satiation
+    private void setSatiation(double sat) {
+        this.satiation = sat;
     }
 
-    // sets stregth
-    public void setStregth(double str) {
-        this.stregth = str;
-    }
-
-    // returns stregth
-    public double getStregth() {
-        return stregth;
+    // returns satiation
+    public double getSatiation() {
+        return satiation;
     }
 
     // returns age

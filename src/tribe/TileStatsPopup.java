@@ -28,7 +28,7 @@ public class TileStatsPopup {
         try {
             label1 = new Label("Coordinates: (" + a.getCords().getX() + ", " + a.getCords().getY() + ")");
             label2 = new Label("Acre: Passable " + a.getPassable() + ", Food " + a.getFood());
-            label3 = new Label("Member: Str " + m.getStregth() + ", Born " + m.getBorn());
+            label3 = new Label("Member: Satiation " + m.getSatiation() + ", Born " + m.getBorn());
         } catch(NullPointerException e) {}
 
         VBox layout = new VBox(10);

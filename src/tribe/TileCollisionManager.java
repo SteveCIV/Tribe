@@ -30,19 +30,9 @@ public class TileCollisionManager {
     private boolean memberMovement() {
         if(collidee.getAcre().getPassable()) {
             if(!collidee.getHasMember()) {
-                if(collidee.getAcre().getFood() >= 0) {
-                    return true;
-                } else {
-                    collider.getMember().memberDeath();
-                    return false;
-                }
+                return true;
             } else {
-                if(collider.getAcre().getFood() >= 0 ) {
-                    return true;
-                } else {
-                    collider.getMember().memberDeath();
-                    return false;
-                }
+                return false;
             }
         } else {
             return false;
@@ -52,12 +42,7 @@ public class TileCollisionManager {
     private boolean memberPlacement() {
         if(collidee.getAcre().getPassable()) {
             if(!collidee.getHasMember()) {
-                if(collidee.getAcre().getFood() >= 0) {
-                    return true;
-                } else {
-                    collider.getMember().memberDeath();
-                    return false;
-                }
+                return true;
             } else {
                 return false;
             }
