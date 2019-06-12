@@ -8,8 +8,8 @@ import java.util.Random;
  */
 public class Map {
     private Acre[][] map = new Acre[Tribe.WIDTH][Tribe.HEIGHT];
-    private double regrowRate = 0.25; // TODO: will be limited from 0.0 to 1.0
-    private double regrowValue = 0.1;
+    private double regrowRate; // TODO: will be limited from 0.0 to 1.0
+    private double regrowValue;
     private static final Random r = new Random();
     
     public Map() {
@@ -82,5 +82,21 @@ public class Map {
     public Acre getAcre(Coordinate c) {
         Acre acre = map[c.getX()][c.getY()];
         return acre;
+    }
+    
+    public void setRegrowRate(double rR) {
+        this.regrowRate = rR;
+    }
+    
+    public double getRegrowRate() {
+        return regrowRate;
+    }
+    
+    public void setRegrowValue(double rV) {
+        this.regrowValue = rV;
+    }
+    
+    public double getRegrowValue() {
+        return regrowValue;
     }
 }

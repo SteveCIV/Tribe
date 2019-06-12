@@ -104,25 +104,36 @@ public class Tribe extends Application {
         currentGame = new Scene(layoutActiveSave, 5 * WIDTH, 5 * HEIGHT + 45);
         
         // components for menuNewGame
-        Label label2 = new Label("New Tribe");
+        Label label2 = new Label("New World");
         Label label3 = new Label("Number of Civilizations");
-        Slider sliderCiv = new Slider(0, 4, 1);
+        Slider sliderCiv = new Slider(0, 4, 2);
         sliderCiv.setShowTickLabels(true);
         sliderCiv.setMajorTickUnit(1);
         sliderCiv.setBlockIncrement(1);
         Label label4 = new Label("Number of Nations per civilization");
-        Slider sliderNat = new Slider(0, 10, 1);
+        Slider sliderNat = new Slider(0, 10, 5);
         sliderNat.setShowTickLabels(true);
         sliderNat.setMajorTickUnit(1);
         sliderNat.setBlockIncrement(1);
         Label label5 = new Label("Number of Members per nation");
-        Slider sliderMem = new Slider(0, 40, 1);
+        Slider sliderMem = new Slider(0, 40, 20);
         sliderMem.setShowTickLabels(true);
         sliderMem.setMajorTickUnit(4);
-        sliderMem.setBlockIncrement(1);
+        sliderMem.setBlockIncrement(4);
+        Label label6 = new Label("Chance of Regrowing Food");
+        Slider sliderRegrowRate = new Slider(0, 1, 0.1);
+        sliderRegrowRate.setShowTickLabels(true);
+        sliderRegrowRate.setMajorTickUnit(0.05);
+        sliderRegrowRate.setBlockIncrement(0.1);
+        Label label7 = new Label("Amount that Food Regrows");
+        Slider sliderRegrowValue = new Slider(0, 1, 0.1);
+        sliderRegrowValue.setShowTickLabels(true);
+        sliderRegrowValue.setMajorTickUnit(0.05);
+        sliderRegrowValue.setBlockIncrement(0.1);
         Button buttonStart = new Button();
         buttonStart.setText("Start Game");
-        buttonStart.setOnAction(e -> startNewGame(window, (int)sliderCiv.getValue(), (int)sliderNat.getValue(), (int)sliderMem.getValue(), gw.getWorldAge())); //TODO: bad idea, passing window
+        // TODO: bed idea, passing window
+        buttonStart.setOnAction(e -> startNewGame(window, (int)sliderCiv.getValue(), (int)sliderNat.getValue(), (int)sliderMem.getValue(), sliderRegrowRate.getValue(), sliderRegrowValue.getValue(), gw.getWorldAge()));
         Button buttonBack = new Button();
         buttonBack.setText("Back");
         buttonBack.setOnAction(e -> window.setScene(menuMain));
@@ -131,10 +142,10 @@ public class Tribe extends Application {
         VBox layout2 = new VBox();
         layout2.setAlignment(Pos.CENTER);
         layout2.setSpacing(20);
-        layout2.getChildren().addAll(label2, label3, sliderCiv, label4, sliderNat, label5, sliderMem, buttonStart, buttonBack);
+        layout2.getChildren().addAll(label2, label3, sliderCiv, label4, sliderNat, label5, sliderMem, label6, sliderRegrowRate, label7, sliderRegrowValue, buttonStart, buttonBack);
         
         // adding layout to scene menuNewGame
-        menuNewGame = new Scene(layout2, 400, 600);
+        menuNewGame = new Scene(layout2, 400, 700);
         
         window.setTitle("Tribe (300x164)");
         window.setResizable(false);
@@ -197,7 +208,8 @@ public class Tribe extends Application {
     }
     
     // starts new game with given parameters (lies, actually adds members to current game)
-    public void startNewGame(Stage window, int popCiv, int popNat, int popMem, int worldAge) {
+    public void startNewGame(Stage window, int popCiv, int popNat, int popMem, double regrowRate, double regrowValue, int worldAge) {
+        gw.updateLand(regrowRate, regrowValue);
         for(int i = 0; i < popCiv; i++) {
             gw.addCiv(popNat, popMem, worldAge);
         }

@@ -86,6 +86,11 @@ public class GameWorld {
         System.out.println();
     }
     
+    public void updateLand(double regrowRate, double regrowValue) {
+        land.setRegrowRate(regrowRate);
+        land.setRegrowValue(regrowValue);
+    }
+    
     public Member findMember(Coordinate cord) {
         for(Civilization c : civs) {
             for(Nation n : c.getNationList()) {
