@@ -73,8 +73,9 @@ public class Civilization {
 
             // create collidee
             Tile collidee = new Tile(testMove, aMove);
-            TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
-            if (!canCollide.memberToTileCollide()) {
+            TileCollisionManager collision = new TileCollisionManager(collider, collidee);
+            
+            if(!collision.memberToTileCollide()) {
                 i--;
             } else {
                 n.memberBorn(rC, year);

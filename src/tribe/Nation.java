@@ -71,27 +71,9 @@ public class Nation {
             Tile collidee = new Tile(testMove, aMove);
             
             // moves member if movement is valid
-            TileCollisionManager canCollide = new TileCollisionManager(collider, collidee);
-            boolean validMove = canCollide.memberToTileCollide();
-            if(validMove) {
-                if(aMove.getFood() > 0) {
-                    m.changeSatiation(0.1);
-                    aMove.changeFood(-0.1);
-                    m.setCords(mMove.getCords().getX(), mMove.getCords().getY());
-                } else {
-                    m.changeSatiation(-0.1);
-                }
-            } else {
-                if(a.getFood() > 0) {
-                    m.changeSatiation(0.1);
-                    a.changeFood(-0.1);
-                } else {
-                    m.changeSatiation(-0.1);
-                }
-            }
-            if(m.getSatiation() < 0) {
-                m.memberDeath();
-            }
+            TileCollisionManager collision = new TileCollisionManager(collider, collidee);
+            collision.memberToTileCollide();
+            m = collision.getCollider().getMember();
         }
     }
     

@@ -17,36 +17,59 @@ public class TileCollisionManager {
     public boolean memberToTileCollide() {
         if(collider.getHasMember()) {
             if(collider.getHasAcre()) {
-                return memberMovement();
+                memberMovement();
             } else {
                 return memberPlacement();
             }
         } else {
             System.out.println("No member wrong method call");
-            return false;
         }
+        return false;
     }
     
-    private boolean memberMovement() {
+    //  collider has acre & member
+    private void memberMovement() {
         if(collidee.getAcre().getPassable()) {
+            
+            // collidee not has member
             if(!collidee.getHasMember()) {
-                return true;
+                if(collidee.getAcre().getFood() > 0) {
+                    collider.getMember().changeSatiation(0.1);
+                    collidee.getAcre().changeFood(-0.1);
+                    collider.getMember().setCords(collidee.getAcre().getCords());
+                } else {
+                    collider.getMember().changeSatiation(-0.1);
+                }
+            
+            // collidee has member
             } else {
-                return false;
+                if(collider.getAcre().getFood() > 0) {
+                    collider.getMember().changeSatiation(0.1);
+                    collider.getAcre().changeFood(-0.1);
+                } else {
+                    if(collider.getMember().getSatiation() > 0) {
+                        collider.getMember().changeSatiation(-0.1);
+                    } else {
+                        collider.getMember().memberDeath();
+                    }
+                }
             }
         } else {
-            return false;
+            // nothing
         }
     }
     
+    // collider has member
     private boolean memberPlacement() {
         if(collidee.getAcre().getPassable()) {
             if(!collidee.getHasMember()) {
                 return true;
             } else {
+                // nothing
                 return false;
             }
         } else {
+            // nothing
             return false;
         }
     }
