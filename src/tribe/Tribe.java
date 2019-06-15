@@ -106,30 +106,40 @@ public class Tribe extends Application {
         // components for menuNewGame
         Label label2 = new Label("New World");
         Label label3 = new Label("Number of Civilizations");
-        Slider sliderCiv = new Slider(0, 4, 2);
+        Slider sliderCiv = new Slider(0, 4, 1);
         sliderCiv.setShowTickLabels(true);
+        sliderCiv.setSnapToTicks(true);
         sliderCiv.setMajorTickUnit(1);
         sliderCiv.setBlockIncrement(1);
+        sliderCiv.setMinorTickCount(0);
         Label label4 = new Label("Number of Nations per civilization");
         Slider sliderNat = new Slider(0, 10, 5);
         sliderNat.setShowTickLabels(true);
+        sliderNat.setSnapToTicks(true);
         sliderNat.setMajorTickUnit(1);
         sliderNat.setBlockIncrement(1);
+        sliderNat.setMinorTickCount(0);
         Label label5 = new Label("Number of Members per nation");
         Slider sliderMem = new Slider(0, 40, 20);
         sliderMem.setShowTickLabels(true);
+        sliderMem.setSnapToTicks(true);
         sliderMem.setMajorTickUnit(4);
         sliderMem.setBlockIncrement(4);
+        sliderMem.setMinorTickCount(3);
         Label label6 = new Label("Chance of Regrowing Food");
         Slider sliderRegrowRate = new Slider(0, 1, 0.1);
         sliderRegrowRate.setShowTickLabels(true);
+        sliderRegrowRate.setSnapToTicks(true);
         sliderRegrowRate.setMajorTickUnit(0.05);
         sliderRegrowRate.setBlockIncrement(0.1);
+        sliderRegrowRate.setMinorTickCount(1);
         Label label7 = new Label("Amount that Food Regrows");
         Slider sliderRegrowValue = new Slider(0, 1, 0.1);
         sliderRegrowValue.setShowTickLabels(true);
-        sliderRegrowValue.setMajorTickUnit(0.05);
+        sliderRegrowValue.setSnapToTicks(true);
+        sliderRegrowValue.setMajorTickUnit(0.1);
         sliderRegrowValue.setBlockIncrement(0.1);
+        sliderRegrowValue.setMinorTickCount(1);
         Button buttonStart = new Button();
         buttonStart.setText("Start Game");
         // TODO: bed idea, passing window
@@ -213,6 +223,9 @@ public class Tribe extends Application {
         for(int i = 0; i < popCiv; i++) {
             gw.addCiv(popNat, popMem, worldAge);
         }
+        System.out.println("New game conditions");
+        System.out.println("CIV: " + popCiv + " NAT: " + popNat + " MEM: " + popMem);
+        System.out.println("RegrowRate: " + regrowRate + " RegrowValue: " + regrowValue);
         window.setScene(currentGame);
     }
     
