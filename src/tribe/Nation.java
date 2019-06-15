@@ -29,6 +29,35 @@ public class Nation {
         this.parent = parent;
     }
     
+    // returns a center point that all initial nation members spawn around
+    // inefficient method! copies an entire map and barely uses it
+    public static Coordinate findValidCenter(Map land, int spawnRadius) {
+        boolean validCenter = false;
+        Coordinate center = new Coordinate();
+        while(!validCenter) {
+            center = Coordinate.randomCoordinate(Tribe.WIDTH, Tribe.HEIGHT);
+            int totalTiles = 0;
+            int passableTiles = 0;
+
+            // if not enough surrounding land is passable reroll center
+            try {
+                for(int x = center.getX() - spawnRadius; x < center.getX() + spawnRadius; x++) {
+                    for(int y = center.getY() - spawnRadius; y < center.getY() + spawnRadius; y++) {
+                        if(land.getAcre(x, y).getPassable()) {
+                            passableTiles++;
+                        }
+                        totalTiles++;
+                    }
+                }
+            } catch(Exception e) {}
+            System.out.println("Passable: " + passableTiles + " Total Tiles: " + totalTiles);
+            if(passableTiles > totalTiles * 0.75) {
+                validCenter = true;
+            }
+        }
+        return center;
+    }
+    
     // moves every member of tribe to valid location
     // inefficient method! copies an entire map and barely uses it
     public void randMoveAllMember(Map land) {

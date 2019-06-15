@@ -74,13 +74,19 @@ public class Map {
     
     // return Acre at given (x, y)
     public Acre getAcre(int x, int y) {
-        Acre acre = map[x][y];
+        Acre acre = new Acre();
+        try {
+            acre = map[x][y];
+        } catch(Exception e) {}
         return acre;
     }
     
     // returns Acre at given Cord
     public Acre getAcre(Coordinate c) {
-        Acre acre = map[c.getX()][c.getY()];
+        Acre acre = new Acre();
+        try {
+        acre = map[c.getX()][c.getY()];
+        } catch(Exception e) {}
         return acre;
     }
     

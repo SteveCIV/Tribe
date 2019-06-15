@@ -35,45 +35,21 @@ public class GameWorld {
     public void addCiv(int popNat, int popMem, int year) {
         // sets gw as parent of civilization
         Civilization c = new Civilization(this);
+        civs.add(c);
 
         // for given nation size
         for (int i = 0; i < popNat; i++) {
 
             // sets civilization as parent of nation
             Nation n = new Nation(c);
-            boolean validCenter = false;
-            Coordinate center = new Coordinate();
+            c.addNation(n);
             
-            while(!validCenter) {
-                // nation gets a center point that all initial members spawn around
-                center = Coordinate.randomCoordinate(Tribe.WIDTH, Tribe.HEIGHT);
-                if(!land.getAcre(center.getX(), center.getY()).getPassable()) {
-                    continue;
-                }
-                int totalTiles = 0;
-                int passTiles = 0;
-
-                // if not enough surrounding land is passable reroll
-                try {
-                    for(int x = center.getX() - 5; x < center.getX() + 5; x++) {
-                        for(int y = center.getY() - 5; y < center.getY() + 5; y++) {
-                            if(land.getAcre(x, y).getPassable()) {
-                                passTiles++;
-                            }
-                            totalTiles++;
-                        }
-                    }
-                } catch(Exception e) {}
-                if(totalTiles == 100 && passTiles > 75) {
-                    validCenter = true;
-                }
-            }
-
+            int spawnRadius = (popMem / 5 + 7) / 2;
+            Coordinate center = Nation.findValidCenter(land, spawnRadius);
+            
             // for given member size
             for (int j = 0; j < popMem; j++) {
-
-                // gets random coordinate
-                Coordinate rC = Coordinate.randomCoordinateRange(center.getX() - 5, center.getY() - 5, center.getX() + 5, center.getY() + 5);
+                Coordinate rC = Coordinate.randomCoordinateRange(center.getX() - spawnRadius, center.getY() - spawnRadius, center.getX() + spawnRadius, center.getY() + spawnRadius);
 
                 // create collider
                 Member m = new Member(rC, year, n);
@@ -83,11 +59,10 @@ public class GameWorld {
                 Acre aMove = land.getAcre(rC.getX(), rC.getY());
 
                 // find member, test if occupied by any member in any civs
-                Member mMove = new Member(rC, n);
-                Member testMove = findMember(mMove.getCords());
+                Member mMove = findMember(m.getCords());
 
                 // create collidee
-                Tile collidee = new Tile(testMove, aMove);
+                Tile collidee = new Tile(mMove, aMove);
                 TileCollisionManager collision = new TileCollisionManager(collider, collidee);
                 
                 if(!collision.memberToTileCollide()) {
@@ -96,9 +71,7 @@ public class GameWorld {
                     n.memberBorn(rC, year);
                 }
             }
-            c.addNation(n);
         }
-        civs.add(c);
     }
     
     // adds new civilization to civs

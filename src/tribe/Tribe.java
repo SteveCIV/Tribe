@@ -31,6 +31,7 @@ public class Tribe extends Application {
     public static final Color SAVANNA = Color.rgb(144, 255, 77);
     public static final Color DESERT = Color.rgb(212, 255, 77);
     public static final Color WASTELAND = Color.rgb(166, 166, 157);
+    public static final Color WATER = Color.rgb(0, 100, 190);
     
     
     Stage window;
@@ -130,7 +131,7 @@ public class Tribe extends Application {
         Slider sliderRegrowRate = new Slider(0, 1, 0.1);
         sliderRegrowRate.setShowTickLabels(true);
         sliderRegrowRate.setSnapToTicks(true);
-        sliderRegrowRate.setMajorTickUnit(0.05);
+        sliderRegrowRate.setMajorTickUnit(0.1);
         sliderRegrowRate.setBlockIncrement(0.1);
         sliderRegrowRate.setMinorTickCount(1);
         Label label7 = new Label("Amount that Food Regrows");
@@ -193,7 +194,7 @@ public class Tribe extends Application {
                     gc.fillRect(i * 5, j * 5, 5, 5);
                 }
                 if(!acre.getPassable()) {
-                    gc.setFill(Color.BLUE);
+                    gc.setFill(WATER);
                     gc.fillRect(i * 5, j * 5, 5, 5);
                 }
             }
@@ -223,9 +224,6 @@ public class Tribe extends Application {
         for(int i = 0; i < popCiv; i++) {
             gw.addCiv(popNat, popMem, worldAge);
         }
-        System.out.println("New game conditions");
-        System.out.println("CIV: " + popCiv + " NAT: " + popNat + " MEM: " + popMem);
-        System.out.println("RegrowRate: " + regrowRate + " RegrowValue: " + regrowValue);
         window.setScene(currentGame);
     }
     

@@ -39,6 +39,7 @@ public class TileCollisionManager {
                     collider.getMember().setCords(collidee.getAcre().getCords());
                 } else {
                     collider.getMember().changeSatiation(-0.1);
+                    collider.getMember().setCords(collidee.getAcre().getCords());
                 }
             
             // collidee has member

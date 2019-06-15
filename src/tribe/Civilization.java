@@ -54,18 +54,14 @@ public class Civilization {
     public void addNation(int pop, int year, Map land) {
         Nation n = new Nation(this);
         for (int i = 0; i < pop; i++) {
-            Random r1 = new Random();
-            int rX = r1.nextInt(Tribe.WIDTH);
-            Random r2 = new Random();
-            int rY = r2.nextInt(Tribe.HEIGHT);
-            Coordinate rC = new Coordinate(rX, rY);
+            Coordinate rC = Coordinate.randomCoordinate(Tribe.WIDTH, Tribe.HEIGHT);
 
             // create collider
             Member m = new Member(rC, year, n);
             Tile collider = new Tile(m);
 
             // find tile
-            Acre aMove = land.getAcre(rX, rY);
+            Acre aMove = land.getAcre(rC.getX(), rC.getY());
 
             // find member, test if occupied 
             Member mMove = new Member(rC, n);
