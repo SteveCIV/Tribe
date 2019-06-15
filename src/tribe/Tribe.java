@@ -1,17 +1,23 @@
 package tribe;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableView;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -49,39 +55,32 @@ public class Tribe extends Application {
         buttonNewGame.setOnAction(e -> window.setScene(menuNewGame));
         Button buttonSavedGame = new Button();
         buttonSavedGame.setText("Saved Games");
-        buttonSavedGame.setOnAction(e -> window.setScene(currentGame)); // TODO: will go to saved games menu
+        buttonSavedGame.setOnAction(e -> window.setScene(menuSavedGame)); // TODO: will go to saved games menu
         Button buttonExit = new Button();
         buttonExit.setText("Exit");
         buttonExit.setOnAction(e -> window.close());
         
         // adding components to layout
-        VBox layout1 = new VBox();
-        layout1.setAlignment(Pos.CENTER);
-        layout1.setSpacing(20);
-        layout1.getChildren().addAll(label1, buttonNewGame, buttonSavedGame, buttonExit);
+        VBox layoutMenuMain = new VBox();
+        layoutMenuMain.setAlignment(Pos.CENTER);
+        layoutMenuMain.setSpacing(20);
+        layoutMenuMain.getChildren().addAll(label1, buttonNewGame, buttonSavedGame, buttonExit);
         
         // adding layout to scene menuMain
-        menuMain = new Scene(layout1, 400, 200);
+        menuMain = new Scene(layoutMenuMain, 400, 200);
         
         // components for scene currentGame
-        Button buttonNextYear1 = new Button();
-        buttonNextYear1.setText("Next Year (x  1)");
+        Button buttonNextYear1 = new Button("Next Year (x  1)");
         buttonNextYear1.setOnAction(e -> newYear());
-        Button buttonNextYear10 = new Button();
-        buttonNextYear10.setText("Next Year (x 10)");
+        Button buttonNextYear10 = new Button("Next Year (x 10)");
         buttonNextYear10.setOnAction(e -> newYear(10));
-        Button buttonNextYear100 = new Button();
-        buttonNextYear100.setText("Next Year (x100)");
+        Button buttonNextYear100 = new Button("Next Year (x100)");
         buttonNextYear100.setOnAction(e -> newYear(100));
-        Button buttonStats = new Button();
-        buttonStats.setText("Game stats");
+        Button buttonStats = new Button("Game stats");
         buttonStats.setOnAction(e -> showGlobalStats());
-        Button buttonMainMenu = new Button();
-        buttonMainMenu.setText("Main Menu");
+        Button buttonMainMenu = new Button("Main Menu");
         buttonMainMenu.setOnAction(e -> window.setScene(menuMain));
         ToolBar toolBar = new ToolBar(buttonNextYear1, buttonNextYear10, buttonNextYear100, buttonStats, buttonMainMenu);
-        
-        // canvas component for currentGame
         Canvas canvas = new Canvas(5 * WIDTH, 5 * HEIGHT);
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, 
         new EventHandler<MouseEvent>() {
@@ -97,12 +96,12 @@ public class Tribe extends Application {
         drawGameWorld(gc);
         
         // adding components to layout
-        BorderPane layoutActiveSave = new BorderPane();
-        layoutActiveSave.setTop(toolBar);
-        layoutActiveSave.setLeft(canvas);
+        BorderPane layoutCurrentGame = new BorderPane();
+        layoutCurrentGame.setTop(toolBar);
+        layoutCurrentGame.setLeft(canvas);
         
         // adding layout to scene currentGame
-        currentGame = new Scene(layoutActiveSave, 5 * WIDTH, 5 * HEIGHT + 45);
+        currentGame = new Scene(layoutCurrentGame, 5 * WIDTH, 5 * HEIGHT + 45);
         
         // components for menuNewGame
         Label label2 = new Label("New World");
@@ -141,22 +140,51 @@ public class Tribe extends Application {
         sliderRegrowValue.setMajorTickUnit(0.1);
         sliderRegrowValue.setBlockIncrement(0.1);
         sliderRegrowValue.setMinorTickCount(1);
-        Button buttonStart = new Button();
-        buttonStart.setText("Start Game");
+        Button buttonStart = new Button("Start Game");
         // TODO: bed idea, passing window
         buttonStart.setOnAction(e -> startNewGame(window, (int)sliderCiv.getValue(), (int)sliderNat.getValue(), (int)sliderMem.getValue(), sliderRegrowRate.getValue(), sliderRegrowValue.getValue(), gw.getWorldAge()));
-        Button buttonBack = new Button();
-        buttonBack.setText("Back");
-        buttonBack.setOnAction(e -> window.setScene(menuMain));
+        Button buttonBack1 = new Button("Back");
+        buttonBack1.setOnAction(e -> window.setScene(menuMain));
         
         // adding components to layout
-        VBox layout2 = new VBox();
-        layout2.setAlignment(Pos.CENTER);
-        layout2.setSpacing(20);
-        layout2.getChildren().addAll(label2, label3, sliderCiv, label4, sliderNat, label5, sliderMem, label6, sliderRegrowRate, label7, sliderRegrowValue, buttonStart, buttonBack);
+        VBox layoutMenuNewGame = new VBox();
+        layoutMenuNewGame.setAlignment(Pos.CENTER);
+        layoutMenuNewGame.setSpacing(20);
+        layoutMenuNewGame.getChildren().addAll(label2, label3, sliderCiv, label4, sliderNat, label5, sliderMem, label6, sliderRegrowRate, label7, sliderRegrowValue, buttonStart, buttonBack1);
         
         // adding layout to scene menuNewGame
-        menuNewGame = new Scene(layout2, 400, 700);
+        menuNewGame = new Scene(layoutMenuNewGame, 400, 700);
+        
+        // components for scene menuSavedGame
+        Label label8 = new Label("Saved Games");
+        TableView<Coordinate> table = new TableView();
+        TableColumn<Coordinate, Integer> columnCordX = new TableColumn<>("X cord");
+        columnCordX.setMinWidth(100);
+        columnCordX.setCellValueFactory(new PropertyValueFactory<>("x"));
+        TableColumn<Coordinate, Integer> columnCordY = new TableColumn<>("Y cord");
+        columnCordY.setMinWidth(100);
+        columnCordY.setCellValueFactory(new PropertyValueFactory<>("y"));
+        table.setItems(FXCollections.observableArrayList(getCoordinate()));
+        table.getColumns().addAll(columnCordX, columnCordY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        ScrollPane scrollpane = new ScrollPane();
+        scrollpane.setFitToWidth(true);
+        scrollpane.setFitToHeight(false);
+        scrollpane.setPrefSize(500, 200);
+        scrollpane.setContent(table);
+        Button buttonBack2 = new Button("Back");
+        buttonBack2.setOnAction(e -> window.setScene(menuMain));
+        
+        // adding components to layout
+        VBox layoutMenuSavedGame = new VBox();
+        layoutMenuSavedGame.setAlignment(Pos.CENTER);
+        layoutMenuSavedGame.setSpacing(20);
+        layoutMenuSavedGame.getChildren().addAll(label8, scrollpane, buttonBack2);
+        
+        
+        
+        // adding layout to scene menuSavedGame
+        menuSavedGame = new Scene(layoutMenuSavedGame, 400, 400);
         
         window.setTitle("Tribe (300x164)");
         window.setResizable(false);
@@ -164,6 +192,15 @@ public class Tribe extends Application {
         window.setY(HEIGHT);
         window.setScene(menuMain);
         window.show();
+    }
+    
+    public ObservableList<Coordinate> getCoordinate() {
+        ObservableList<Coordinate> cords = FXCollections.observableArrayList();
+        for(int i = 0; i < 5; i++) {
+            Coordinate cord = new Coordinate(i, 5);
+            cords.add(cord);
+        }
+        return cords;
     }
     
     // draws all gw layers to canvas

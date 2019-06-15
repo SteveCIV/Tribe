@@ -8,7 +8,7 @@ import java.util.Random;
  */
 public class Map {
     private Acre[][] map = new Acre[Tribe.WIDTH][Tribe.HEIGHT];
-    private double regrowRate; // TODO: will be limited from 0.0 to 1.0
+    private double regrowRate;
     private double regrowValue;
     private static final Random r = new Random();
     
