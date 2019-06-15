@@ -52,12 +52,28 @@ public class Map {
             for(int j = 0; j < map[0].length; j++) {
                 if(map[i][j].getPassable()) {
                     if(map[i][j].getFood() < 1.0) {
-                        if(r.nextDouble() <= regrowRate) {
-                            map[i][j].changeFood(regrowValue);
+                        if(adjacentFood(i, j)) {
+                            if(r.nextDouble() <= regrowRate) {
+                                map[i][j].changeFood(regrowValue);
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+    
+    private boolean adjacentFood(int x, int y) {
+        if(map[x][y - 1].getFood() > 0) {
+            return true;
+        } else if(map[x + 1][y].getFood() > 0) {
+            return true;
+        } else if(map[x][y + 1].getFood() > 0) {
+            return true;
+        } else if(map[x - 1][y].getFood() > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
     
