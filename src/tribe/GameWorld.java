@@ -41,21 +41,46 @@ public class GameWorld {
 
             // sets civilization as parent of nation
             Nation n = new Nation(c);
+            boolean validCenter = false;
+            Coordinate center = new Coordinate();
+            
+            while(!validCenter) {
+                // nation gets a center point that all initial members spawn around
+                center = Coordinate.randomCoordinate(Tribe.WIDTH, Tribe.HEIGHT);
+                if(!land.getAcre(center.getX(), center.getY()).getPassable()) {
+                    continue;
+                }
+                int totalTiles = 0;
+                int passTiles = 0;
+
+                // if not enough surrounding land is passable reroll
+                try {
+                    for(int x = center.getX() - 5; x < center.getX() + 5; x++) {
+                        for(int y = center.getY() - 5; y < center.getY() + 5; y++) {
+                            if(land.getAcre(x, y).getPassable()) {
+                                passTiles++;
+                            }
+                            totalTiles++;
+                        }
+                    }
+                } catch(Exception e) {}
+                if(totalTiles == 100 && passTiles > 75) {
+                    validCenter = true;
+                }
+            }
 
             // for given member size
             for (int j = 0; j < popMem; j++) {
 
                 // gets random coordinate
-                int rX = r.nextInt(Tribe.WIDTH);
-                int rY = r.nextInt(Tribe.HEIGHT);
-                Coordinate rC = new Coordinate(rX, rY);
+                Coordinate rC = Coordinate.randomCoordinateRange(center.getX() - 5, center.getY() - 5, center.getX() + 5, center.getY() + 5);
 
                 // create collider
                 Member m = new Member(rC, year, n);
                 Tile collider = new Tile(m);
 
                 // find tile
-                Acre aMove = land.getAcre(rX, rY);
+                Acre aMove = land.getAcre(rC.getX(), rC.getY());
 
                 // find member, test if occupied by any member in any civs
                 Member mMove = new Member(rC, n);
