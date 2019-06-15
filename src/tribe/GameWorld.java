@@ -44,12 +44,12 @@ public class GameWorld {
             Nation n = new Nation(c);
             c.addNation(n);
             
-            int spawnRadius = (popMem / 5 + 7) / 2;
-            Coordinate center = Nation.findValidCenter(land, spawnRadius);
+            int sR = Nation.spawnRadius(popMem);
+            Coordinate center = findValidNationCenter(sR);
             
             // for given member size
             for (int j = 0; j < popMem; j++) {
-                Coordinate rC = Coordinate.randomCoordinateRange(center.getX() - spawnRadius, center.getY() - spawnRadius, center.getX() + spawnRadius, center.getY() + spawnRadius);
+                Coordinate rC = Coordinate.randomCoordinateRange(center.getX() - sR, center.getY() - sR, center.getX() + sR, center.getY() + sR);
 
                 // create collider
                 Member m = new Member(rC, year, n);
@@ -65,10 +65,10 @@ public class GameWorld {
                 Tile collidee = new Tile(mMove, aMove);
                 TileCollisionManager collision = new TileCollisionManager(collider, collidee);
                 
-                if(!collision.memberToTileCollide()) {
-                    j--;
-                } else {
+                if(collision.memberToTileCollide()) {
                     n.memberBorn(rC, year);
+                } else {
+                    j--;
                 }
             }
         }
@@ -77,6 +77,34 @@ public class GameWorld {
     // adds new civilization to civs
     public void addCiv(Civilization c) {
         civs.add(c);
+    }
+    
+    // returns a center point that all initial nation members spawn around
+    public Coordinate findValidNationCenter(int spawnRadius) {
+        Coordinate center;
+        while(true) {
+            center = Coordinate.randomCoordinate(Tribe.WIDTH, Tribe.HEIGHT);
+            if(!land.getAcre(center.getX(), center.getY()).getPassable()) {
+                continue;
+            }
+            int totalTiles = 0;
+            int passableTiles = 0;
+
+            // if not enough surrounding land is passable reroll center
+            try {
+                for(int x = center.getX() - spawnRadius; x < center.getX() + spawnRadius; x++) {
+                    for(int y = center.getY() - spawnRadius; y < center.getY() + spawnRadius; y++) {
+                        if(land.getAcre(x, y).getPassable() && findMember(x, y) == null) {
+                            passableTiles++;
+                        }
+                        totalTiles++;
+                    }
+                }
+            } catch (Exception e) {}
+            if(passableTiles > totalTiles * 0.75) {
+                return center;
+            }
+        }
     }
     
     // removes civ from civs
@@ -90,6 +118,11 @@ public class GameWorld {
         land.setRegrowValue(regrowValue);
     }
     
+    public Member findMember(int x, int y) {
+        Coordinate cord = new Coordinate(x, y);
+        return findMember(cord);
+    }
+    
     public Member findMember(Coordinate cord) {
         for(Civilization c : civs) {
             for(Nation n : c.getNationList()) {
@@ -100,7 +133,7 @@ public class GameWorld {
                 }
             }
         }
-        return null;
+       return null;
     }
     
     // GETTERS && SETTERS

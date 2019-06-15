@@ -63,11 +63,11 @@ public class TileCollisionManager {
     // collider has member
     private boolean memberPlacement() {
         if(collidee.getAcre().getPassable()) {
-            if(!collidee.getHasMember()) {
-                return true;
+            if(collidee.getHasMember()) {
+                return false;
             } else {
                 // nothing
-                return false;
+                return true;
             }
         } else {
             // nothing
