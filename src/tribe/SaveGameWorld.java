@@ -13,7 +13,7 @@ public class SaveGameWorld {
         GameWorld gw = gameWorld;
         String fn = fileName;
         try { 
-            FileOutputStream saveFile = new FileOutputStream("C:\\Users\\conor\\Documents\\NetBeansProjects\\CS141\\Tribe\\src\\savedGames\\" + fn);
+            FileOutputStream saveFile = new FileOutputStream("..\\Tribe\\src\\savedGames\\" + fn);
             ObjectOutputStream save = new ObjectOutputStream(saveFile);
             save.writeObject(gw);
             save.close();

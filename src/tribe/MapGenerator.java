@@ -21,9 +21,8 @@ public class MapGenerator {
     public void imageToMap() {
         try {
             // finds image
-            File file = new File("C:/Users/conor/Documents/NetBeansProjects/CS141/Tribe/src/imageMap/Earth300x164.png");
+            File file = new File("..\\Tribe\\src\\imageMap\\Earth300x164.png");
             BufferedImage image = ImageIO.read(file);
-
 
             // loops every pixel in image and prints to txt file
             for(int i = 0; i < image.getHeight(); i++) {

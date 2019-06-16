@@ -222,7 +222,7 @@ public class Tribe extends Application {
     
     public static ObservableList<File> updateSavedFiles() {
         ObservableList<File> FileList = FXCollections.observableArrayList();
-        String dirName = "C:\\Users\\conor\\Documents\\NetBeansProjects\\CS141\\Tribe\\src\\savedGames";
+        String dirName = "..\\Tribe\\src\\savedGames";
         File folder = new File(dirName);
         File[] fileList = folder.listFiles();
         for(File f : fileList) {
