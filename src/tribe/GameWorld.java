@@ -1,5 +1,6 @@
 package tribe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -7,7 +8,7 @@ import java.util.Random;
  *
  * @author conor
  */
-public class GameWorld {
+public class GameWorld implements Serializable {
     private final Map land;
     private final ArrayList<Civilization> civs;
     private int worldAge;
@@ -173,7 +174,7 @@ public class GameWorld {
     }
     
     // returns popGw
-    public int getPopGw() {
+    public int getPop() {
         for(Civilization c : civs) {
             popGw += c.getPopCiv();
         }

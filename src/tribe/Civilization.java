@@ -1,13 +1,13 @@
 package tribe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
  * @author conor
  */
-public class Civilization {
+public class Civilization implements Serializable {
     private ArrayList<Nation> nations;
     private final GameWorld parent;
     private int popCiv;

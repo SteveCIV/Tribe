@@ -1,10 +1,12 @@
 package tribe;
 
+import java.io.Serializable;
+
 /**
  *
  * @author conor
  */
-public class Acre {
+public class Acre implements Serializable {
     private Coordinate cord;
     private double food;
     private boolean passable;

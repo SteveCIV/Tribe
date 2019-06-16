@@ -1,10 +1,12 @@
 package tribe;
 
+import java.io.Serializable;
+
 /**
  *
  * @author conor
  */
-public class Member {
+public class Member implements Serializable {
     private Coordinate cord;
     private final Nation parent;
     private double satiation;

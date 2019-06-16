@@ -1,12 +1,13 @@
 package tribe;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  *
  * @author conor
  */
-public class Map {
+public class Map implements Serializable{
     private Acre[][] map = new Acre[Tribe.WIDTH][Tribe.HEIGHT];
     private double regrowRate;
     private double regrowValue;

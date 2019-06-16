@@ -1,5 +1,6 @@
 package tribe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.paint.Color;
@@ -8,11 +9,11 @@ import javafx.scene.paint.Color;
  *
  * @author conor
  */
-public class Nation {
+public class Nation implements Serializable {
     private ArrayList<Member> members;
     private final Civilization parent;
     private static final Random r = new Random();
-    public final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+    public transient final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
     Nation(Civilization parent) {
         this.members = new ArrayList();

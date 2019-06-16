@@ -1,5 +1,15 @@
 package tribe;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,7 +65,7 @@ public class Tribe extends Application {
         buttonNewGame.setOnAction(e -> window.setScene(menuNewGame));
         Button buttonSavedGame = new Button();
         buttonSavedGame.setText("Saved Games");
-        buttonSavedGame.setOnAction(e -> window.setScene(menuSavedGame)); // TODO: will go to saved games menu
+        buttonSavedGame.setOnAction(e -> window.setScene(menuSavedGame));
         Button buttonExit = new Button();
         buttonExit.setText("Exit");
         buttonExit.setOnAction(e -> window.close());
@@ -78,9 +88,11 @@ public class Tribe extends Application {
         buttonNextYear100.setOnAction(e -> newYear(100));
         Button buttonStats = new Button("Game stats");
         buttonStats.setOnAction(e -> showGlobalStats());
+        Button buttonSave = new Button("Save Game");
+        buttonSave.setOnAction(e -> saveWorldGetName());
         Button buttonMainMenu = new Button("Main Menu");
         buttonMainMenu.setOnAction(e -> window.setScene(menuMain));
-        ToolBar toolBar = new ToolBar(buttonNextYear1, buttonNextYear10, buttonNextYear100, buttonStats, buttonMainMenu);
+        ToolBar toolBar = new ToolBar(buttonNextYear1, buttonNextYear10, buttonNextYear100, buttonStats, buttonSave, buttonMainMenu);
         Canvas canvas = new Canvas(5 * WIDTH, 5 * HEIGHT);
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, 
         new EventHandler<MouseEvent>() {
@@ -157,15 +169,18 @@ public class Tribe extends Application {
         
         // components for scene menuSavedGame
         Label label8 = new Label("Saved Games");
-        TableView<Coordinate> table = new TableView();
-        TableColumn<Coordinate, Integer> columnCordX = new TableColumn<>("X cord");
-        columnCordX.setMinWidth(100);
-        columnCordX.setCellValueFactory(new PropertyValueFactory<>("x"));
-        TableColumn<Coordinate, Integer> columnCordY = new TableColumn<>("Y cord");
-        columnCordY.setMinWidth(100);
-        columnCordY.setCellValueFactory(new PropertyValueFactory<>("y"));
-        table.setItems(FXCollections.observableArrayList(getCoordinate()));
-        table.getColumns().addAll(columnCordX, columnCordY);
+        TableView<File> table = new TableView();
+        Button buttonFileList = new Button("Refresh List");
+        buttonFileList.setOnAction(e -> table.setItems(FXCollections.observableArrayList(updateSavedFiles())));
+        TableColumn<File, String> columnName = new TableColumn<>("File Name");
+        columnName.setMinWidth(50);
+        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<File, Long> columnSize = new TableColumn<>("File Size in Bytes");
+        columnSize.setMinWidth(50);
+        columnSize.setCellValueFactory(new PropertyValueFactory<>("TotalSpace"));
+        
+        table.setItems(FXCollections.observableArrayList(updateSavedFiles()));
+        table.getColumns().addAll(columnName, columnSize);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ScrollPane scrollpane = new ScrollPane();
         scrollpane.setFitToWidth(true);
@@ -179,9 +194,7 @@ public class Tribe extends Application {
         VBox layoutMenuSavedGame = new VBox();
         layoutMenuSavedGame.setAlignment(Pos.CENTER);
         layoutMenuSavedGame.setSpacing(20);
-        layoutMenuSavedGame.getChildren().addAll(label8, scrollpane, buttonBack2);
-        
-        
+        layoutMenuSavedGame.getChildren().addAll(label8, buttonFileList, scrollpane, buttonBack2);
         
         // adding layout to scene menuSavedGame
         menuSavedGame = new Scene(layoutMenuSavedGame, 400, 400);
@@ -194,13 +207,28 @@ public class Tribe extends Application {
         window.show();
     }
     
-    public ObservableList<Coordinate> getCoordinate() {
-        ObservableList<Coordinate> cords = FXCollections.observableArrayList();
-        for(int i = 0; i < 5; i++) {
-            Coordinate cord = new Coordinate(i, 5);
-            cords.add(cord);
+    public static GameWorld fileToGameWorld(File f) {
+        GameWorld gw = null;
+        try {
+            FileInputStream saveFile = new FileInputStream(f);
+            ObjectInputStream restore = new ObjectInputStream(saveFile);
+            gw = (GameWorld)restore.readObject();
+            restore.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return cords;
+        return gw;
+    }
+    
+    public static ObservableList<File> updateSavedFiles() {
+        ObservableList<File> FileList = FXCollections.observableArrayList();
+        String dirName = "C:\\Users\\conor\\Documents\\NetBeansProjects\\CS141\\Tribe\\src\\savedGames";
+        File folder = new File(dirName);
+        File[] fileList = folder.listFiles();
+        for(File f : fileList) {
+            FileList.add(f);
+        }
+        return FileList;
     }
     
     // draws all gw layers to canvas
@@ -275,6 +303,10 @@ public class Tribe extends Application {
         Acre a = gw.getLand().getAcre(c.getX(), c.getY());
         Tile t = new Tile(m, a);
         TileStatsPopup.display("Tile Statistics", t);
+    }
+    
+    public void saveWorldGetName() {
+        SaveWorldPopup.display("Save World", gw);
     }
     
     // moves all members and redraws canvas n times

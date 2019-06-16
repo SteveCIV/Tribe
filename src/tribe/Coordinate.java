@@ -1,12 +1,13 @@
 package tribe;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  *
  * @author conor
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
     private int x, y;
     private static final Random r = new Random();
     
