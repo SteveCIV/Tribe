@@ -80,19 +80,21 @@ public class Tribe extends Application {
         menuMain = new Scene(layoutMenuMain, 400, 200);
         
         // components for scene currentGame
-        Button buttonNextYear1 = new Button("Next Year (x  1)");
+        Button buttonNextYear1 = new Button("Next Year");
         buttonNextYear1.setOnAction(e -> newYear());
-        Button buttonNextYear10 = new Button("Next Year (x 10)");
+        Button buttonNextYear10 = new Button("Next Decade");
         buttonNextYear10.setOnAction(e -> newYear(10));
-        Button buttonNextYear100 = new Button("Next Year (x100)");
+        Button buttonNextYear100 = new Button("Next Century");
         buttonNextYear100.setOnAction(e -> newYear(100));
+        Button buttonChangeWorldSettings = new Button("Change Settings");
+        buttonChangeWorldSettings.setOnAction(e -> updateGameWorldSettings(gw));
         Button buttonStats = new Button("Game stats");
         buttonStats.setOnAction(e -> showGlobalStats());
         Button buttonSave = new Button("Save Game");
         buttonSave.setOnAction(e -> saveWorldGetName());
         Button buttonMainMenu = new Button("Main Menu");
         buttonMainMenu.setOnAction(e -> window.setScene(menuMain));
-        ToolBar toolBar = new ToolBar(buttonNextYear1, buttonNextYear10, buttonNextYear100, buttonStats, buttonSave, buttonMainMenu);
+        ToolBar toolBar = new ToolBar(buttonNextYear1, buttonNextYear10, buttonNextYear100, buttonChangeWorldSettings, buttonStats, buttonSave, buttonMainMenu);
         Canvas canvas = new Canvas(5 * WIDTH, 5 * HEIGHT);
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, 
         new EventHandler<MouseEvent>() {
@@ -116,7 +118,7 @@ public class Tribe extends Application {
         currentGame = new Scene(layoutCurrentGame, 5 * WIDTH, 5 * HEIGHT + 45);
         
         // components for menuNewGame
-        Label label2 = new Label("New World");
+        Label label2 = new Label("Settings");
         Label label3 = new Label("Number of Civilizations");
         Slider sliderCiv = new Slider(0, 4, 1);
         sliderCiv.setShowTickLabels(true);
@@ -154,7 +156,7 @@ public class Tribe extends Application {
         sliderRegrowValue.setMinorTickCount(1);
         Button buttonStart = new Button("Start Game");
         // TODO: bed idea, passing window
-        buttonStart.setOnAction(e -> startNewGame(window, (int)sliderCiv.getValue(), (int)sliderNat.getValue(), (int)sliderMem.getValue(), sliderRegrowRate.getValue(), sliderRegrowValue.getValue(), gw.getWorldAge()));
+        buttonStart.setOnAction(e -> newGameWorld(window, (int)sliderCiv.getValue(), (int)sliderNat.getValue(), (int)sliderMem.getValue(), sliderRegrowRate.getValue(), sliderRegrowValue.getValue(), gw.getWorldAge()));
         Button buttonBack1 = new Button("Back");
         buttonBack1.setOnAction(e -> window.setScene(menuMain));
         
@@ -185,7 +187,7 @@ public class Tribe extends Application {
         ScrollPane scrollpane = new ScrollPane();
         scrollpane.setFitToWidth(true);
         scrollpane.setFitToHeight(false);
-        scrollpane.setPrefSize(500, 200);
+        scrollpane.setPrefSize(200, 200);
         scrollpane.setContent(table);
         Button buttonBack2 = new Button("Back");
         buttonBack2.setOnAction(e -> window.setScene(menuMain));
@@ -207,6 +209,7 @@ public class Tribe extends Application {
         window.show();
     }
     
+    // untested!
     public static GameWorld fileToGameWorld(File f) {
         GameWorld gw = null;
         try {
@@ -284,12 +287,18 @@ public class Tribe extends Application {
     }
     
     // starts new game with given parameters (lies, actually adds members to current game)
-    public void startNewGame(Stage window, int popCiv, int popNat, int popMem, double regrowRate, double regrowValue, int worldAge) {
+    public void newGameWorld(Stage window, int popCiv, int popNat, int popMem, double regrowRate, double regrowValue, int worldAge) {
+        GameWorld gameWorld = new GameWorld();
+        gw = gameWorld;
         gw.updateLand(regrowRate, regrowValue);
         for(int i = 0; i < popCiv; i++) {
             gw.addCiv(popNat, popMem, worldAge);
         }
         window.setScene(currentGame);
+    }
+    
+    public void updateGameWorldSettings(GameWorld gw) {
+        ChangeSettingsPopup.display("Change Game Settings", gw);
     }
     
     // opens GlobalStats window
