@@ -3,13 +3,7 @@ package tribe;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import javafx.util.Callback;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -189,6 +183,10 @@ public class Tribe extends Application {
         scrollpane.setFitToHeight(false);
         scrollpane.setPrefSize(200, 200);
         scrollpane.setContent(table);
+        Button buttonLoad = new Button("Load Game");
+        buttonLoad.setOnAction(e -> loadGameWorld(window, table.getSelectionModel().getSelectedItem()));
+        Button buttonDelete = new Button("Delete Game");
+        buttonDelete.setOnAction(e -> System.out.println("Game Deleted"));
         Button buttonBack2 = new Button("Back");
         buttonBack2.setOnAction(e -> window.setScene(menuMain));
         
@@ -196,7 +194,10 @@ public class Tribe extends Application {
         VBox layoutMenuSavedGame = new VBox();
         layoutMenuSavedGame.setAlignment(Pos.CENTER);
         layoutMenuSavedGame.setSpacing(20);
-        layoutMenuSavedGame.getChildren().addAll(label8, buttonFileList, scrollpane, buttonBack2);
+        layoutMenuSavedGame.getChildren().addAll(label8, buttonFileList, scrollpane, buttonDelete, buttonLoad, buttonBack2);
+        table.setOnMouseClicked((MouseEvent event) -> {
+            if(event.getClickCount() >= 1) {}
+        });
         
         // adding layout to scene menuSavedGame
         menuSavedGame = new Scene(layoutMenuSavedGame, 400, 400);
@@ -210,17 +211,24 @@ public class Tribe extends Application {
     }
     
     // untested!
-    public static GameWorld fileToGameWorld(File f) {
-        GameWorld gw = null;
-        try {
-            FileInputStream saveFile = new FileInputStream(f);
-            ObjectInputStream restore = new ObjectInputStream(saveFile);
-            gw = (GameWorld)restore.readObject();
-            restore.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void loadGameWorld(Stage window, File f) {
+        if(f != null) {
+            GameWorld gw = null;
+            try {
+                FileInputStream saveFile = new FileInputStream(f);
+                ObjectInputStream restore = new ObjectInputStream(saveFile);
+                gw = (GameWorld) restore.readObject();
+                restore.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            newGameWorld(window, gw);
         }
-        return gw;
+        System.out.println("No Load Selected");
+    }
+    
+    public void deleteGameWorld() {
+        
     }
     
     public static ObservableList<File> updateSavedFiles() {
@@ -294,6 +302,11 @@ public class Tribe extends Application {
         for(int i = 0; i < popCiv; i++) {
             gw.addCiv(popNat, popMem, worldAge);
         }
+        window.setScene(currentGame);
+    }
+    
+    public void newGameWorld(Stage window, GameWorld gameWorld) {
+        gw = gameWorld;
         window.setScene(currentGame);
     }
     
