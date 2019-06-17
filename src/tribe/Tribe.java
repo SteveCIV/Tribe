@@ -186,7 +186,7 @@ public class Tribe extends Application {
         Button buttonLoad = new Button("Load Game");
         buttonLoad.setOnAction(e -> loadGameWorld(window, table.getSelectionModel().getSelectedItem()));
         Button buttonDelete = new Button("Delete Game");
-        buttonDelete.setOnAction(e -> System.out.println("Game Deleted"));
+        buttonDelete.setOnAction(e -> table.setItems(FXCollections.observableArrayList(deleteGameWorld(table.getSelectionModel().getSelectedItem()))));
         Button buttonBack2 = new Button("Back");
         buttonBack2.setOnAction(e -> window.setScene(menuMain));
         
@@ -227,8 +227,20 @@ public class Tribe extends Application {
         System.out.println("No Load Selected");
     }
     
-    public void deleteGameWorld() {
-        
+    public static ObservableList<File> deleteGameWorld(File deleteF) {
+        ObservableList<File> FileList = FXCollections.observableArrayList();
+        String dirName = "..\\Tribe\\src\\savedGames";
+        File folder = new File(dirName);
+        File[] fileList = folder.listFiles();
+        for (File f : fileList) {
+            if(!f.equals(deleteF)) {
+                System.out.println("Added to FileList");
+                FileList.add(f);
+            } else {
+                f.delete();
+            }
+        }
+        return FileList;
     }
     
     public static ObservableList<File> updateSavedFiles() {
