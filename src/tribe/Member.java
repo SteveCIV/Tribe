@@ -10,12 +10,14 @@ public class Member implements Serializable {
     private Coordinate cord;
     private final Nation parent;
     private double satiation;
+    private double maxSatiation;
     private final int born;
     
     Member(Nation parent) {
         this.cord = new Coordinate(-1, -1);
         this.parent = parent;
         this.satiation = 0.0;
+        this.maxSatiation = 0;
         this.born = -1;
     }
     
@@ -23,13 +25,15 @@ public class Member implements Serializable {
         this.cord = new Coordinate(c.getX(), c.getY());
         this.parent = parent;
         this.satiation = 0.0;
+        this.maxSatiation = 0;
         this.born = -1;
     }
     
-    Member(Coordinate c, int yearBorn, Nation parent) {
+    Member(Coordinate c, Nation parent, int yearBorn) {
         this.cord = new Coordinate(c.getX(), c.getY());
         this.parent = parent;
         this.satiation = 0.0;
+        this.maxSatiation = 10;
         this.born = yearBorn;
     }
     
@@ -53,6 +57,9 @@ public class Member implements Serializable {
     
     public void changeSatiation(double satiation) {
         this.satiation += satiation;
+        if(this.satiation > maxSatiation) {
+            this.satiation -= satiation;
+        }
     }
     
     // SETTERS && GETTERS

@@ -51,7 +51,7 @@ public class GameWorld implements Serializable {
                 Coordinate rC = Coordinate.randomCoordinateRange(center.getX() - sR, center.getY() - sR, center.getX() + sR, center.getY() + sR);
 
                 // create collider
-                Member m = new Member(rC, year, n);
+                Member m = new Member(rC, n, year);
                 Tile collider = new Tile(m);
 
                 // find tile

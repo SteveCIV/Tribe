@@ -57,7 +57,7 @@ public class Civilization implements Serializable {
             Coordinate rC = Coordinate.randomCoordinate(Tribe.WIDTH, Tribe.HEIGHT);
 
             // create collider
-            Member m = new Member(rC, year, n);
+            Member m = new Member(rC, n, year);
             Tile collider = new Tile(m);
 
             // find tile

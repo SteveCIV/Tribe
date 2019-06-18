@@ -53,7 +53,7 @@ public class Nation implements Serializable {
             
             // finds part of collidee
             Acre aMove = land.getAcre(mCord.getX(), mCord.getY());
-            Member mMove = new Member(mCord, m.getBorn(), this);
+            Member mMove = new Member(mCord, this, m.getBorn());
             switch (r.nextInt(5)) {
                 case 0:
                     mMove.moveNorth();
@@ -99,7 +99,7 @@ public class Nation implements Serializable {
     // adds member a given (x, y) and birth year 
     // unsafe method! does not check if square is a valid place for member to exist
     public void memberBorn(Coordinate c, int yearBorn) {
-        Member newMember = new Member(c, yearBorn, this);
+        Member newMember = new Member(c, this, yearBorn);
         members.add(newMember);
     }
     
