@@ -112,7 +112,7 @@ public class Civilization implements Serializable {
     // returns popCiv
     public int getPopCiv() {
         for (Nation n : nations) {
-            popCiv += n.getNationPop();
+            popCiv += n.getPopNation();
         }
         return popCiv;
     }

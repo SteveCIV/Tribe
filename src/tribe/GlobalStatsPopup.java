@@ -24,7 +24,7 @@ public class GlobalStatsPopup {
         int numMem = 0;
         for (Civilization c : gw.getCivList()) {
             for (Nation n : c.getNationList()) {
-                numMem += n.getNationPop();
+                numMem += n.getPopNation();
                 numNat++;
             }
             numCiv++;

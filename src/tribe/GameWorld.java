@@ -2,7 +2,6 @@ package tribe;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
@@ -13,7 +12,6 @@ public class GameWorld implements Serializable {
     private final ArrayList<Civilization> civs;
     private int worldAge;
     public int popGw;
-    private static final Random r = new Random();
     
     public GameWorld() {
         land = new Map();

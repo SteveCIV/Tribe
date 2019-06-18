@@ -12,22 +12,26 @@ import javafx.scene.paint.Color;
 public class Nation implements Serializable {
     private ArrayList<Member> members;
     private final Civilization parent;
-    private static final Random r = new Random();
+    private int popNat;
+    private static Random r = new Random();
     public transient final Color NCOLOR = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
     
     Nation(Civilization parent) {
         this.members = new ArrayList();
         this.parent = parent;
+        this.popNat = 0;
     }
     
     Nation(int pop, int year, Civilization parent) {
         this.members = new ArrayList();
         this.parent = parent;
+        this.popNat = 0;
     }
     
     Nation(ArrayList<Member> m, Civilization parent) {
         this.members = m;
         this.parent = parent;
+        this.popNat = 0;
     }
     
     public static int spawnRadius(int popMem) {
@@ -129,8 +133,9 @@ public class Nation implements Serializable {
     }
     
     // returns popNation
-    public int getNationPop() {
-        return members.size();
+    public int getPopNation() {
+        popNat = members.size();
+        return popNat;
     }
     
     public static String toStringMemberList(ArrayList<Member> mList) {

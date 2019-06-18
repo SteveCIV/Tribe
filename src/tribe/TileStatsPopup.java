@@ -25,14 +25,18 @@ public class TileStatsPopup {
         Label label1 = new Label("Coordinates: null");
         Label label2 = new Label("Acre: null");
         Label label3 = new Label("Member: null");
+        Label label4 = new Label("Nation: null");
+        Label label5 = new Label("Civilization: null");
         try {
             label1 = new Label("Coordinates: (" + a.getCords().getX() + ", " + a.getCords().getY() + ")");
             label2 = new Label("Acre: Passable " + a.getPassable() + ", Food " + a.getFood());
             label3 = new Label("Member: Satiation " + m.getSatiation() + ", Born " + m.getBorn());
+            label4 = new Label("Nation: " + m.getParent() + ", Size " + m.getParent().getPopNation());
+            label5 = new Label("Civilization: " + m.getParent().getParent() + ", Size " + m.getParent().getParent().getPopCiv());
         } catch(NullPointerException e) {}
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label1, label2, label3);
+        layout.getChildren().addAll(label1, label2, label3, label4, label5);
 
         Scene scene = new Scene(layout);
         window.setScene(scene);
