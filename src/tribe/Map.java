@@ -122,4 +122,32 @@ public class Map implements Serializable{
     public double getRegrowValue() {
         return regrowValue;
     }
+    
+    public int getTotalPassable() {
+        int totalPassable = 0;
+        for(int i = 0; i < map.length; i++) {
+            for(int j = 0; j < map[0].length; j++) {
+                if(map[i][j].getPassable()) {
+                    totalPassable++;
+                }
+            }
+        }
+        return totalPassable;
+    }
+    
+    public double getAverageFood() {
+        double avgFood = 0;
+        int totalPassable = 0;
+        int totalFood = 0;
+        for(int i = 0; i < map.length; i++) {
+            for(int j = 0; j < map[0].length; j++) {
+                if(map[i][j].getPassable()) {
+                    totalPassable++;
+                    totalFood += map[i][j].getFood();
+                }
+            }
+        }
+        avgFood = totalPassable / totalFood;
+        return avgFood;
+    }
 }
